@@ -1,0 +1,42 @@
+﻿## Interface: 20400
+
+## Title: SimpleSelfRebuff
+## Notes: Rebuff yourself on mousewheel.
+## Author: Adirelle
+## Version: 2.0
+## X-Date: $Date$
+## X-Category: Buffs
+## X-License: GPL v2 or later
+## X-Credits: Sayclub (korean translation), Stan (spell ids)
+
+## X-Embeds: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0, LibDataBroker-1.1
+## OptionalDeps: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0
+## SavedVariables: SimpleSelfRebuffDB
+
+## X-Website: http://wowace.com/wiki/SimpleSelfRebuff
+## X-AceForum: 7015
+
+embeds.xml
+
+# Cannot be disembedded
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+
+locales\locale-enUS.lua
+locales\locale-frFR.lua
+locales\locale-koKR.lua
+
+SimpleSelfRebuff.lua
+
+modules.xml
+
+buffs\druid.lua
+buffs\hunter.lua
+buffs\mage.lua
+buffs\paladin.lua
+buffs\priest.lua
+buffs\shaman.lua
+buffs\warlock.lua
+buffs\warrior.lua
+
+buffs\tracking.lua
+
