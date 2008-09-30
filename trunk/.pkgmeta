@@ -13,8 +13,8 @@ externals:
   libs/AceGUI-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceGUI-3.0
   libs/AceLocale-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
   libs/AceTimer-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceTimer-3.0
-  ItemsBuffs/libs/LibPeriodicTable-3.1: svn://svn.wowace.com/wow/libperiodictable-3-1/mainline/trunk/LibPeriodicTable-3.1
-  ItemsBuffs/libs/LibPeriodicTable-3.1-Consumable: svn://svn.wowace.com/wow/libperiodictable-3-1/mainline/trunk/LibPeriodicTable-3.1-Consumable
+  ItemBuffs/libs/LibPeriodicTable-3.1: svn://svn.wowace.com/wow/libperiodictable-3-1/mainline/trunk/LibPeriodicTable-3.1
+  ItemBuffs/libs/LibPeriodicTable-3.1-Consumable: svn://svn.wowace.com/wow/libperiodictable-3-1/mainline/trunk/LibPeriodicTable-3.1-Consumable
   Reminder/libs/LibSink-2.0: svn://svn.wowace.com/wow/lib-sink-2-0/mainline/trunk/LibSink-2.0
 
 # Waiting for the repo to be fixed.
