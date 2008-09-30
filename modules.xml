@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+<Script file="CastBinding\CastBinding.lua"/>
+
+<Script file="DataObject\libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
+<Script file="DataObject\DataObject.lua"/>
+
+<Include file="Reminder\libs\LibSink-2.0\lib.xml"/>
+<Script file="Reminder\Reminder.lua"/>
+
+<Script file="ItemBuffs\libs\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua"/>
+<Script file="ItemBuffs\libs\LibPeriodicTable-3.1-Consumable\LibPeriodicTable-3.1-Consumable.lua"/>
+<Script file="ItemBuffs\ItemBuffs.lua"/>
+
+</Ui>
