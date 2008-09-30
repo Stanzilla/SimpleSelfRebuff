@@ -12,9 +12,8 @@
 ## Dependencies: SimpleSelfRebuff
 ## DefaultState: enabled
 
-# Load libraries from core addon
 #@no-lib-strip@
-..\SimpleSelfRebuff\libs\LibSink-2.0\lib.xml
+libs\LibSink-2.0\lib.xml
 #@end-no-lib-strip@
 
 Reminder.lua
