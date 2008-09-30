@@ -29,7 +29,6 @@ libs\AceConsole-3.0\AceConsole-3.0.xml
 libs\AceDB-3.0\AceDB-3.0.xml
 libs\AceLocale-3.0\AceLocale-3.0.xml
 libs\LibDebugLog-1.0\lib.xml
-libs\LibSink-2.0\lib.xml
 #@end-no-lib-strip@
 
 locales\locale-enUS.lua
@@ -37,8 +36,6 @@ locales\locale-frFR.lua
 locales\locale-koKR.lua
 
 SimpleSelfRebuff.lua
-
-modules.xml
 
 buffs\druid.lua
 buffs\hunter.lua
@@ -51,3 +48,18 @@ buffs\warrior.lua
 
 buffs\tracking.lua
 
+#@debug@
+# Load modules (and the libs they depend on)
+# DataObject
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+DataObject\DataObject.lua
+# ItemBuffs
+libs\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua
+libs\LibPeriodicTable-3.1-Consumable\LibPeriodicTable-3.1-Consumable.lua
+ItemBuffs\ItemBuffs.lua
+# Reminder
+libs\LibSink-2.0\lib.xml
+Reminder\Reminder.lua
+# Cast binding
+CastBinding\CastBinding.lua
+#@end-debug@
