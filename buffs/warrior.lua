@@ -1,5 +1,4 @@
 if not SimpleSelfRebuff then return end
-SimpleSelfRebuff:_rev("$Revision$")
 if select(2, UnitClass('player')) ~= 'WARRIOR' then return end
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
