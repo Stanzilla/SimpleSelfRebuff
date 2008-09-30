@@ -1,5 +1,4 @@
 if not SimpleSelfRebuff then return end
-SimpleSelfRebuff:_rev("$Revision$")
 if select(2, UnitClass('player')) ~= 'DRUID' then return end
 
 local GetShapeshiftForm = GetShapeshiftForm

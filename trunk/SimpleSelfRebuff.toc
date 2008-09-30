@@ -3,8 +3,8 @@
 ## Title: SimpleSelfRebuff
 ## Notes: Rebuff yourself on mousewheel.
 ## Author: Adirelle
-## Version: 2.0
-## X-Date: $Date$
+## Version: @project-version@ 
+## X-Date: @project-date-iso@
 ## X-Category: Buffs
 ## X-License: GPL v2 or later
 ## X-Credits: Sayclub (korean translation), Stan (spell ids)
@@ -16,10 +16,21 @@
 ## X-Website: http://wowace.com/wiki/SimpleSelfRebuff
 ## X-AceForum: 7015
 
-embeds.xml
-
-# Cannot be disembedded
-libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+#@no-lib-strip@
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceTimer-3.0\AceTimer-3.0.xml
+libs\AceBucket-3.0\AceBucket-3.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
+libs\AceConfig-3.0\AceConfig-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+libs\LibDebugLog-1.0\lib.xml
+libs\LibSink-2.0\lib.xml
+#@end-no-lib-strip@
 
 locales\locale-enUS.lua
 locales\locale-frFR.lua

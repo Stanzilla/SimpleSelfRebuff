@@ -3,8 +3,8 @@
 ## Title: SimpleSelfRebuff |r[|cffeda55fItemBuffs|r]
 ## Notes: Rebuff yourself on mousewheel.
 ## Author: Adirelle
-## Version: 2.0
-## X-Date: $Date$
+## Version: @project-version@ 
+## X-Date: @project-date-iso@
 ## X-Category: Buffs
 ## X-License: GPL v2 or later
 
@@ -13,7 +13,9 @@
 ## DefaultState: enabled
 
 # Load libraries from core addon
+#@no-lib-strip@
 ..\SimpleSelfRebuff\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua
 ..\SimpleSelfRebuff\LibPeriodicTable-3.1-Consumable\LibPeriodicTable-3.1-Consumable.lua
+#@end-no-lib-strip@
 
 DataObject.lua

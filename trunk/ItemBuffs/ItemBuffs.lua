@@ -1,6 +1,5 @@
 if not SimpleSelfRebuff then return end
 local SimpleSelfRebuff = SimpleSelfRebuff
-SimpleSelfRebuff:_rev("$Revision$")
 
 local ItemBuffs = SimpleSelfRebuff:NewModule("ItemBuffs")
 

@@ -90,21 +90,16 @@ local spellNames
 -------------------------------------------------------------------------------
 
 SimpleSelfRebuff = LibStub("AceAddon-3.0"):NewAddon("SimpleSelfRebuff",
-	"AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceBucket-3.0",
-	"LibDebugLog-1.0"
+	"AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceBucket-3.0"
+	,"LibDebugLog-1.0"
 )
 local SimpleSelfRebuff = SimpleSelfRebuff
-local majorVersion = GetAddOnMetadata("SimpleSelfRebuff", "Version")
 
-function SimpleSelfRebuff:_rev(tag)
-	self.revision = math.max(self.revision or 0, tonumber(tag:match("%d+")))
-	self.version = majorVersion .. "." .. self.revision
-end
-
-SimpleSelfRebuff:_rev("$Revision$")
 
 -- Static early initialization
+--@alpha@
 local debugOptions
+--@end-alpha@
 do
 	local self = SimpleSelfRebuff
 
@@ -185,7 +180,8 @@ do
 			},
 		},
 	}
-	
+
+--@alpha@	
 	debugOptions ={
 		name = 'Debugging',
 		type = 'group',
@@ -206,6 +202,7 @@ do
 			},
 		},
 	}
+--@end-alpha@
 
 	self.CATEGORY_TRACKING = CATEGORY_TRACKING
 	self.CATEGORY_MAINHAND = CATEGORY_MAINHAND
@@ -226,13 +223,14 @@ do
 
 	self.L = L
 
-	-- For debugging
+--@debug@
 	SSR = self
 
 	self.categories = categories
 	self.sources = sources
 	self.targets = targets
 	self.spellIcons = spellIcons
+--@end-debug@
 end
 
 -------------------------------------------------------------------------------
@@ -409,11 +407,13 @@ function SimpleSelfRebuff:OnInitialize()
 	AceConfig:RegisterOptionsTable(self.name, self.options)
 	AceConfigDialog:SetDefaultSize(self.name, 450, 500)
 	self:RegisterChatCommand("ssr", "ChatCommand")
-	self:RegisterChatCommand("simpleselfrebuff", "ChatCommand")	
+	self:RegisterChatCommand("simpleselfrebuff", "ChatCommand")
 
-	-- Debug config 
+--@alpha@
+	-- Debug config
 	AceConfig:RegisterOptionsTable(self.name..'_DEBUG', debugOptions)
-	
+--@end-alpha@
+
 	-- Blizzard panel
 	AceConfigDialog:AddToBlizOptions(self.name, self.name)
 
@@ -428,8 +428,10 @@ end
 function SimpleSelfRebuff:ChatCommand(input)
 	if not input or input:trim() == "" then
 		self:OpenGUI()
+--@alpha@	
 	elseif input == "debug" then
 		AceConfigDialog:Open(self.name..'_DEBUG')
+--@end-alpha@
 	else
 		LibStub("AceConfigCmd-3.0").HandleCommand(self, "ssr", self.name, input == "help" and "" or input)
 	end
@@ -496,7 +498,7 @@ function SimpleSelfRebuff:IterateCategories(stateMask)
 end
 
 function SimpleSelfRebuff:DumpDiagnostic()
-	self:Print(("Version %s"):format(self.version))
+	self:Print("Version @project-version@")
 	self:Print("=== Categories ===")
 	for categoryName, category in pairs(categories) do
 		self:Print(("* %s: selected=%q, actual=%q"):format(
@@ -708,12 +710,14 @@ do
 	end
 
 	function SimpleSelfRebuff:OnModuleCreated(module)
+		--@alpha@
 		if type(module.Debug) == 'function' then
 			local opts = debugOptions.args
 			local opt = LibStub('LibDebugLog-1.0'):GetAce3OptionTable(module, 120)
 			opt.name = module.moduleName
-			opts['debug_'..module.moduleName] = opt 
+			opts['debug_'..module.moduleName] = opt
 		end
+		--@end-alpha@
 		lodModules[module.moduleName] = nil
 	end
 
@@ -1286,7 +1290,7 @@ do
 	function BuffTargetClass.prototype:IsBuffUsable(buff)
 		return true
 	end
-	
+
 	function BuffTargetClass.prototype:SetupSecureButton(buff, button)
 		-- NOOP
 	end

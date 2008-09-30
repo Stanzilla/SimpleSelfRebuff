@@ -1,5 +1,4 @@
 if not SimpleSelfRebuff then return end
-SimpleSelfRebuff:_rev("$Revision$")
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)	
 

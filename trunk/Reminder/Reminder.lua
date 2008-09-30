@@ -1,6 +1,5 @@
 if not SimpleSelfRebuff then return end
 local SimpleSelfRebuff = SimpleSelfRebuff
-SimpleSelfRebuff:_rev("$Revision$")
 
 local Reminder = SimpleSelfRebuff:NewModule("Reminder", "LibSink-2.0", "AceTimer-3.0", "AceBucket-3.0")
 
