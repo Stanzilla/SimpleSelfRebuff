@@ -48,18 +48,6 @@ buffs\warrior.lua
 
 buffs\tracking.lua
 
-#@debug@
-# Load modules (and the libs they depend on)
-# DataObject
-libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
-DataObject\DataObject.lua
-# ItemBuffs
-libs\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua
-libs\LibPeriodicTable-3.1-Consumable\LibPeriodicTable-3.1-Consumable.lua
-ItemBuffs\ItemBuffs.lua
-# Reminder
-libs\LibSink-2.0\lib.xml
-Reminder\Reminder.lua
-# Cast binding
-CastBinding\CastBinding.lua
-#@end-debug@
+# This file isn't shipped with packages because 
+# the module are extracted as LoadOnDemand addons
+modules.xml
