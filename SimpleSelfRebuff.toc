@@ -48,6 +48,4 @@ buffs\warrior.lua
 
 buffs\tracking.lua
 
-# This file isn't shipped with packages because 
-# the module are extracted as LoadOnDemand addons
 modules.xml
