@@ -13,18 +13,13 @@ externals:
   libs/AceGUI-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceGUI-3.0
   libs/AceLocale-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
   libs/AceTimer-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceTimer-3.0
+  libs/LibDebugLog-1.0: svn://svn.wowace.com/wow/libdebuglog-1-0/mainline/trunk/LibDebugLog-1.0
   ItemBuffs/libs/LibPeriodicTable-3.1: svn://svn.wowace.com/wow/libperiodictable-3-1/mainline/trunk/LibPeriodicTable-3.1
   ItemBuffs/libs/LibPeriodicTable-3.1-Consumable: svn://svn.wowace.com/wow/libperiodictable-3-1/mainline/trunk/LibPeriodicTable-3.1-Consumable
-  Reminder/libs/LibSink-2.0: svn://svn.wowace.com/wow/lib-sink-2-0/mainline/trunk/LibSink-2.0
-
-# Waiting for the repo to be fixed.
-#    libs/LibDebugLog-1.0: svn://svn.wowace.com/wow/lib-debug-log-1-0/mainline/trunk/LibDebugLog-1.0
+  Reminder/libs/LibSink-2.0: svn://svn.wowace.com/wow/libsink-2-0/mainline/trunk/LibSink-2.0
 
 move-folders:
   SimpleSelfRebuff/CastBinding: SimpleSelfRebuff_CastBinding
   SimpleSelfRebuff/DataObject: SimpleSelfRebuff_DataObject
   SimpleSelfRebuff/ItemBuffs: SimpleSelfRebuff_ItemBuffs
   SimpleSelfRebuff/Reminder: SimpleSelfRebuff_Reminder
-
-ignore:
-	- modules.xml
