@@ -23,8 +23,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 		spellNames[588],   -- Inner Fire
 		spellNames[15473], -- Shadowform
 		spellNames[2651],  -- Elune's Grace
-		spellNames[18137], -- Shadowguard
-		spellNames[2652],  -- Touch of Weakness
+		--spellNames[18137], -- Shadowguard
+		--spellNames[2652],  -- Touch of Weakness
 		spellNames[6346]   -- Fear Ward
 	)
 	
