@@ -13,14 +13,16 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 		spellNames[8024], -- Flametongue Weapon
 		spellNames[8033], -- Frostbrand Weapon
 		spellNames[8017], -- Rockbiter Weapon
-		spellNames[8232]  -- Windfury Weapon    
+		spellNames[8232], -- Windfury Weapon    
+		spellNames[51730] -- Earthliving Weapon 
 	)
 
 	self:GetCategory(self.CATEGORY_OFFHAND):addMulti(
 		spellNames[8024], -- Flametongue Weapon
 		spellNames[8033], -- Frostbrand Weapon
 		spellNames[8017], -- Rockbiter Weapon
-		spellNames[8232]  -- Windfury Weapon    
+		spellNames[8232], -- Windfury Weapon    
+		spellNames[51730] -- Earthliving Weapon 
 	)
 	
 end)

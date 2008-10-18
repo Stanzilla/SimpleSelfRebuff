@@ -45,6 +45,7 @@ buffs\priest.lua
 buffs\shaman.lua
 buffs\warlock.lua
 buffs\warrior.lua
+buffs\deathknight.lua
 
 buffs\tracking.lua
 
