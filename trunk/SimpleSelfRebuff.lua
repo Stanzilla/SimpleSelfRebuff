@@ -360,10 +360,9 @@ do
 					spellIcons[key] = icon
 					spellIcons[name] = icon
 				else
-					spellNames[key] = key
-					spellIcons[key] = key
-					--geterrorhandler()(("GetSpellInfo(%q) returned nil"):format(key))
-					--SimpleSelfRebuff:Debug("GetSpellInfo(%q) returned nil", key)
+					spellNames[key] = tostring(key)
+					spellIcons[key] = tostring(key)
+					geterrorhandler()(("No information about spell or item #%q"):format(key))
 				end
 				return self[key]
 			end
