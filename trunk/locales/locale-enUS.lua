@@ -44,6 +44,7 @@ L["Reminder"] = true
 L["Set the color of the missing message."] = true
 L["Set the color of the refreshing message."] = true
 L["Sharpening Stone"] = true
+L["Seal"] = true
 L["Shout"] = true
 L["Spirit"] = true
 L["Tracking"] = true
