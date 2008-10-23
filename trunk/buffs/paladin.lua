@@ -23,15 +23,17 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 		:add( spellNames[19746], 'subcat', 'concentration', 'mountFriendly', true ) -- Concentration Aura
 		:add( spellNames[32223], 'subcat', 'crusader',      'mountFriendly', true ) -- Crusader Aura
 
-	self:GetCategory(L['Seal'])
-		:add( spellNames[21084] ) -- Seal of Righteousness
-		:add( spellNames[20164] ) -- Seal of Justice
-		:add( spellNames[20165] ) -- Seal of Light
-		:add( spellNames[20166] ) -- Seal of Wisdom
-		:add( spellNames[31892] ) -- Seal of Blood
-		:add( spellNames[31801] ) -- Seal of Vengeance
-		:add( spellNames[53736] ) -- Seal of Corruption
-		:add( spellNames[53720] ) -- Seal of the Martyr
+	self:GetCategory(L['Seal']):addMulti( 
+		spellNames[21084], -- Seal of Righteousness
+		spellNames[20164], -- Seal of Justice
+		spellNames[20165], -- Seal of Light
+		spellNames[20166], -- Seal of Wisdom
+		spellNames[20375], -- Seal of Command
+		spellNames[31892], -- Seal of Blood
+		spellNames[31801], -- Seal of Vengeance
+		spellNames[53736], -- Seal of Corruption
+		spellNames[53720]  -- Seal of the Martyr
+	)
 		
 	self:AddStandaloneBuff( spellNames[25780] ) -- Righteous Fury
 
