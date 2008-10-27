@@ -100,7 +100,7 @@ function ItemBuffs:OnEnable()
 			then
 				category
 					:add( L["Sharpening Stone"], 'setName', 'Consumable.Weapon Buff.Stone.Sharpening Stone' )
-					:add( L["Weight Stone"], 'setName', 'Consumable.Weapon Buff.Stone.Weight Stone' )
+					:add( L["Weight Stone"],     'setName', 'Consumable.Weapon Buff.Stone.Weight Stone' )
 			end
 
 			-- Oils
@@ -121,12 +121,12 @@ function ItemBuffs:OnEnable()
 
 			if class == 'ROGUE' then
 				category
-					:add( spellNames[21835], 'minLevel', 68, 'setName', 'Consumable.Weapon Buff.Poison.Anesthetic'   ) -- Anesthetic Poison
-					:add( spellNames[ 3420], 'minLevel', 20, 'setName', 'Consumable.Weapon Buff.Poison.Crippling'    ) -- Crippling Poison
-					:add( spellNames[ 2835], 'minLevel', 30, 'setName', 'Consumable.Weapon Buff.Poison.Deadly'       ) -- Deadly Poison
-					:add( spellNames[21927], 'minLevel', 20, 'setName', 'Consumable.Weapon Buff.Poison.Instant'      ) -- Instant Poison
-					:add( spellNames[ 5763], 'minLevel', 24, 'setName', 'Consumable.Weapon Buff.Poison.Mind Numbing' ) -- Mind-numbing Poison
-					:add( spellNames[22055], 'minLevel', 32, 'setName', 'Consumable.Weapon Buff.Poison.Wound'        ) -- Wound Poison
+					:add( GetItemInfo(21835), 'minLevel', 68, 'setName', 'Consumable.Weapon Buff.Poison.Anesthetic'   ) -- Anesthetic Poison
+					:add( GetItemInfo( 3775), 'minLevel', 20, 'setName', 'Consumable.Weapon Buff.Poison.Crippling'    ) -- Crippling Poison
+					:add( GetItemInfo( 2892), 'minLevel', 30, 'setName', 'Consumable.Weapon Buff.Poison.Deadly'       ) -- Deadly Poison
+					:add( GetItemInfo( 6947), 'minLevel', 20, 'setName', 'Consumable.Weapon Buff.Poison.Instant'      ) -- Instant Poison
+					:add( GetItemInfo( 5237), 'minLevel', 24, 'setName', 'Consumable.Weapon Buff.Poison.Mind Numbing' ) -- Mind-numbing Poison
+					:add( GetItemInfo(10918), 'minLevel', 32, 'setName', 'Consumable.Weapon Buff.Poison.Wound'        ) -- Wound Poison
 			end
 
 		end
