@@ -6,9 +6,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 	local cat = self:GetCategory(self.CATEGORY_TRACKING)
 	for i = 1, GetNumTrackingTypes() do
 		local name, texture, _, type = GetTrackingInfo(i)
-		if type == 'spell' then
-			cat:add(name, 'mountFriendly', true, 'texture', texture)
-		end
+		cat:add(name, 'mountFriendly', true, 'texture', texture, 'trackingType', type, 'trackingId', i)
 	end
 		
 end)
