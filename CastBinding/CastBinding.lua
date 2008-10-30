@@ -220,7 +220,7 @@ function CastBinding:OnEnable()
 
 	function CastBinding:FeedDataObject()
 		if pendingBuff then
-			return 10, pendingBuff.name, self.core.spellIcons[pendingBuff.name]
+			return 10, pendingBuff.name, pendingBuff.texture or self.core.spellIcons[pendingBuff.name]
 		end
 	end
 

@@ -54,7 +54,8 @@ local CATEGORY_TRACKING = L["Tracking"] or "Tracking"
 local CATEGORY_MAINHAND = L["Main weapon"] or "Main weapon"
 local CATEGORY_OFFHAND  = L["Off-hand weapon"] or "Off-hand weapon"
 
-local SOURCE_SPELL  = 'spell'
+local SOURCE_SPELL    = 'spell'
+local SOURCE_TRACKING = 'tracking'
 
 local TARGET_AURA     = 'aura'
 local TARGET_TRACKING = 'tracking'
@@ -208,7 +209,8 @@ do
 	self.CATEGORY_MAINHAND = CATEGORY_MAINHAND
 	self.CATEGORY_OFFHAND  = CATEGORY_OFFHAND
 
-	self.SOURCE_SPELL  = SOURCE_SPELL
+	self.SOURCE_SPELL    = SOURCE_SPELL
+	self.SOURCE_TRACKING = SOURCE_TRACKING
 
 	self.TARGET_AURA     = TARGET_AURA
 	self.TARGET_TRACKING = TARGET_TRACKING
@@ -1413,21 +1415,9 @@ do
 		end
 	end
 
-	local PlayerBuff
-	if select(4, GetBuildInfo()) < 30000 then
-		-- Live
-		function PlayerBuff(index)
-			local name, rank, iconTexture, count, duration, timeLeft = UnitBuff("player", index)
-			return name, timeLeft, not not duration
-		end
-
-	else
-		-- WotLK
-		function PlayerBuff(index)
-			local name, _, _, _, _, duration, timeEnd, untilCanceled = UnitBuff("player", index)
-			return name, timeEnd and timeEnd-GetTime(), not not untilCanceled
-		end
-
+	local function PlayerBuff(index)
+		local name, _, _, _, _, duration, timeEnd, isMine = UnitBuff("player", index)
+		return name, timeEnd and timeEnd-GetTime(), not not isMine 
 	end
 
 	local seen = {}
@@ -1480,47 +1470,57 @@ end
 -------------------------------------------------------------------------------
 
 do
-	local TrackingBuff = BuffTargetClass:new(TARGET_TRACKING)
-	SimpleSelfRebuff.buffTypes.Tracking = TrackingBuff
+	local TrackingBuffTarget = BuffTargetClass:new(TARGET_TRACKING)
+	SimpleSelfRebuff.buffTypes.TrackingTarget = TrackingBuffTarget
 
-	local textures = {}
-
-	function TrackingBuff:OnBuffRegister(buff)
-		local texture = buff.texture
-		if not texture then
-			texture = spellIcons[buff.name] or select(3, GetSpellInfo(buff.name))
-			if not texture then
-				return -- Ignore trackings we don't know
-			end
-			buff.texture = true
-		end
-		if not texture then
-			warn('Unknown tracking texture for spell %q', buff.name)
-		elseif textures[texture] then
-			warn('Tracking texture already set for %q: %q', buff.name, self.textures[texture].name)
-		else
-			textures[texture] = buff
-		end
+	function TrackingBuffTarget:OnBuffRegister(buff)
+		buff.found = true
 	end
 
-	function TrackingBuff:OnEnable()
+	function TrackingBuffTarget:OnEnable()
 		self:RegisterEvent('MINIMAP_UPDATE_TRACKING', 'ScanTracking')
 		self:RegisterSignal('BuffSetupChanged', 'ScanTracking')
 		self:ScanTracking()
 	end
 
-	function TrackingBuff:ScanTracking()
-		local texture = GetTrackingTexture()
-		local buff = texture and textures[texture]
-		self:Debug("Current tracking: %q", buff and buff.name)
-		if buff then
-			buff:SetAsActualBuff(true, true)
-		else
-			for buff in pairs(self.allBuffs) do
-				if buff:IsActualBuff() then
-					buff:SetAsActualBuff(false)
-				end
+	function TrackingBuffTarget:ScanTracking()
+		for buff in pairs(self.allBuffs) do
+			local active = select(3, GetTrackingInfo(buff.trackingId))
+			if active then
+				SSR:Debug('Active tracking: %q', buff.name)
+				buff:SetAsActualBuff(true, true)
+				return
 			end
+		end
+		for buff in pairs(self.allBuffs) do
+			buff:SetAsActualBuff(false)
+		end
+	end
+end
+
+do
+	local TrackingBuffSource = BuffSourceClass:new(SOURCE_TRACKING)
+	SimpleSelfRebuff.buffTypes.TrackingSource = TrackingBuffSource
+
+	function TrackingBuffSource:SetupSecureButton(buff, button)
+		self:Debug('Setup casting for tracking %q', buff.name)
+		button:SetAttribute('*type*', 'macro')
+		button:SetAttribute('*macrotext*', ('/run SetTracking(%s)'):format(buff.trackingId or "nil"))
+	end
+
+	function TrackingBuffSource:_GetBuffCooldown(buff)
+		if buff.trackingType == 'spell' then
+			return GetSpellCooldown(buff.name)
+		else
+			return 0, 0
+		end
+	end
+
+	function TrackingBuffSource:_IsBuffUsable(buff)
+		if buff.trackingType == 'spell' then
+			return IsUsableSpell(buff.name)
+		else
+			return true
 		end
 	end
 
@@ -1650,7 +1650,7 @@ do
 		end
 
 		-- Prebuild categories
-		self:GetCategory(self.CATEGORY_TRACKING, self.TARGET_TRACKING)
+		self:GetCategory(self.CATEGORY_TRACKING, self.TARGET_TRACKING, self.SOURCE_TRACKING)
 		self:GetCategory(self.CATEGORY_MAINHAND, self.TARGET_MAINHAND)
 		self:GetCategory(self.CATEGORY_OFFHAND,  self.TARGET_OFFHAND)
 
