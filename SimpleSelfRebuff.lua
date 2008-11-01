@@ -1471,6 +1471,7 @@ end
 
 do
 	local TrackingBuffTarget = BuffTargetClass:new(TARGET_TRACKING)
+	local AceTimer = LibStub('AceTimer-3.0')
 	SimpleSelfRebuff.buffTypes.TrackingTarget = TrackingBuffTarget
 
 	function TrackingBuffTarget:OnBuffRegister(buff)
@@ -1478,11 +1479,24 @@ do
 	end
 
 	function TrackingBuffTarget:OnEnable()
-		self:RegisterEvent('MINIMAP_UPDATE_TRACKING', 'ScanTracking')
+		self:RegisterEvent('MINIMAP_UPDATE_TRACKING')
+		self:RegisterEvent('UNIT_AURA')
 		self:RegisterSignal('BuffSetupChanged', 'ScanTracking')
 		self:ScanTracking()
 	end
+	
+	function TrackingBuffTarget:UNIT_AURA(event, unit)
+		if unit == 'player' then
+			self:ScanTracking()
+		end
+	end
 
+	function TrackingBuffTarget:MINIMAP_UPDATE_TRACKING()
+		self:ScanTracking()
+		-- Rescan in 1.5 seconds, there are sometimes some kind of lag
+		AceTimer.ScheduleTimer(self, "ScanTracking", 1.5)
+	end
+	
 	function TrackingBuffTarget:ScanTracking()
 		for buff in pairs(self.allBuffs) do
 			local active = select(3, GetTrackingInfo(buff.trackingId))
