@@ -1487,7 +1487,7 @@ do
 		for buff in pairs(self.allBuffs) do
 			local active = select(3, GetTrackingInfo(buff.trackingId))
 			if active then
-				SSR:Debug('Active tracking: %q', buff.name)
+				SimpleSelfRebuff:Debug('Active tracking: %q', buff.name)
 				buff:SetAsActualBuff(true, true)
 				return
 			end
