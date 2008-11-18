@@ -92,7 +92,7 @@ function ItemBuffs:OnEnable()
 
 			local category = self:GetCategory(categoryName)
 			category.source = SOURCE_PT3SET
-
+			
 			-- Stones
 			if true or
 				class == 'ROGUE'  or class == 'WARRIOR' or class == 'PALADIN' or
@@ -120,13 +120,16 @@ function ItemBuffs:OnEnable()
 			end
 
 			if class == 'ROGUE' then
-				category
-					:add( GetItemInfo(21835), 'minLevel', 68, 'setName', 'Consumable.Weapon Buff.Poison.Anesthetic'   ) -- Anesthetic Poison
-					:add( GetItemInfo( 3775), 'minLevel', 20, 'setName', 'Consumable.Weapon Buff.Poison.Crippling'    ) -- Crippling Poison
-					:add( GetItemInfo( 2892), 'minLevel', 30, 'setName', 'Consumable.Weapon Buff.Poison.Deadly'       ) -- Deadly Poison
-					:add( GetItemInfo( 6947), 'minLevel', 20, 'setName', 'Consumable.Weapon Buff.Poison.Instant'      ) -- Instant Poison
-					:add( GetItemInfo( 5237), 'minLevel', 24, 'setName', 'Consumable.Weapon Buff.Poison.Mind Numbing' ) -- Mind-numbing Poison
-					:add( GetItemInfo(10918), 'minLevel', 32, 'setName', 'Consumable.Weapon Buff.Poison.Wound'        ) -- Wound Poison
+				local function addPoison(itemId, setName)
+					local name, _, _, _, minLevel, _, _, _, _, texture = GetItemInfo(itemId)
+					category:add( name, 'minLevel', minLevel, 'setName', 'Consumable.Weapon Buff.Poison.'..setName, 'texture', texture )
+				end			
+				addPoison( 3775, 'Crippling'   )
+				addPoison( 6947, 'Instant'     )
+				addPoison( 5237, 'Mind Numbing') 
+				addPoison( 2892, 'Deadly'      )
+				addPoison(10918, 'Wound'       ) 
+				addPoison(21835, 'Anesthetic'  )
 			end
 
 		end

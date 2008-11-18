@@ -8,7 +8,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 		spellNames[13161], -- Aspect of the Beast
 		spellNames[5118],  -- Aspect of the Cheetah
 		spellNames[13165], -- Aspect of the Hawk
-		spellNames[13163]  -- Aspect of the Monkey
+		spellNames[13163], -- Aspect of the Monkey
+		spellNames[61846]  -- Aspect of the Dragonhawk
 	)
 		:add(	spellNames[13159], 'subcat', 'pack' ) -- Aspect of the Pack
 		:add(	spellNames[20043], 'subcat', 'wild' ) -- Aspect of the Wild
