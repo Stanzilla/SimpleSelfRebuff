@@ -139,7 +139,7 @@ function Reminder:OnEnable()
 			text = L["%s is missing."]:format(buff.name)
 			color = db.colors.missing
 		end
-		self:Pour(text, color.r, color.g, color.b, nil, nil, nil, nil, nil, buff.texture or self.core.spellIcons[buff.name])
+		self:Pour(text, color.r, color.g, color.b, nil, nil, nil, nil, nil, buff.texture)
 	end
 
 	function Reminder:FeedTooltip(tooltip)

@@ -3,7 +3,7 @@ if select(2, UnitClass('player')) ~= 'DRUID' then return end
 
 local GetShapeshiftForm = GetShapeshiftForm
 
-SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
+SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	-- Specific option for druid
 	local db = self.db.profile
@@ -26,12 +26,12 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 	
 	-- Now the buffs
 	
-	self:AddStandaloneBuff(spellNames[467], "checkRequirement", checkRequirement) -- Thorns
-	self:AddStandaloneBuff(spellNames[16864], "checkRequirement", checkRequirement) -- Omen of Clarity
-	self:AddStandaloneBuff(spellNames[16689], "checkRequirement", checkRequirement) -- Nature's Grasp
+	self:AddStandaloneBuff(467, "checkRequirement", checkRequirement) -- Thorns
+	self:AddStandaloneBuff(16864, "checkRequirement", checkRequirement) -- Omen of Clarity
+	self:AddStandaloneBuff(16689, "checkRequirement", checkRequirement) -- Nature's Grasp
 	
-	local cat = self:GetCategory(spellNames[1126]) -- Mark of the Wild
-	cat:add(spellNames[1126], "checkRequirement", checkRequirement)
-	cat:add(spellNames[21849], "checkRequirement", checkRequirement) -- Gift of the Wild
+	local cat = self:GetCategory(1126) -- Mark of the Wild
+	cat:add(1126, "checkRequirement", checkRequirement)
+	cat:add(21849, "checkRequirement", checkRequirement) -- Gift of the Wild
 	
 end)

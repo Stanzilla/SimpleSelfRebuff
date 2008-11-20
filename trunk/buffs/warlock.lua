@@ -6,20 +6,20 @@ local UnitExists = UnitExists
 SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
 
 	self:GetCategory(L['Armor']):addMulti(
-		spellNames[687], -- Demon Skin
-		spellNames[706], -- Demon Armor
-		spellNames[28176] -- Fel Armor
+		687, -- Demon Skin
+		706, -- Demon Armor
+		28176 -- Fel Armor
 	)
 	
 	self:AddMultiStandaloneBuffs(
-		spellNames[132], -- Detect Invisibility
-		spellNames[5697] -- Unending Breath
+		132, -- Detect Invisibility
+		5697 -- Unending Breath
 	)
 	
 	local function petExists(buff)
 		return UnitExists('pet')
 	end
 	
-	self:AddStandaloneBuff( spellNames[19028], 'checkRequirement', petExists ) -- Soul Link
+	self:AddStandaloneBuff( 19028, 'checkRequirement', petExists ) -- Soul Link
 	
 end)

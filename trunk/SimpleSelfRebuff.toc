@@ -9,12 +9,9 @@
 ## X-License: GPL v2 or later
 ## X-Credits: Sayclub (korean translation), Stan (spell ids)
 
-## X-Embeds: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0, LibDataBroker-1.1
+## X-Embeds: Ace3, LibSink-2.0, LibDebugLog-1.0, LibDataBroker-1.1
 ## OptionalDeps: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0
 ## SavedVariables: SimpleSelfRebuffDB
-
-## X-Website: http://wowace.com/wiki/SimpleSelfRebuff
-## X-AceForum: 7015
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua

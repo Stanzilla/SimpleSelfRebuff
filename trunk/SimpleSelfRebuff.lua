@@ -83,9 +83,6 @@ local monitoringActive
 
 local db, db_char
 
-local spellIcons
-local spellNames
-
 -------------------------------------------------------------------------------
 -- Addon declaration
 -------------------------------------------------------------------------------
@@ -231,7 +228,6 @@ do
 	self.categories = categories
 	self.sources = sources
 	self.targets = targets
-	self.spellIcons = spellIcons
 --@end-debug@
 end
 
@@ -259,11 +255,13 @@ end
 -- Helpers
 -------------------------------------------------------------------------------
 
-local function error(msg, ...)
+local error = error
+
+local function err(msg, ...)
 	if select('#', ...) > 0 then
 		msg = msg:format(...)
 	end
-	return _G.error(msg, 2)
+	return error(msg, 3)
 end
 
 
@@ -345,37 +343,6 @@ local function formatDuration(duration, default)
 	end
 end
 SimpleSelfRebuff.formatDuration = formatDuration
-
--- Helper to get name and icon of spells
-do
-	local spellMeta = {
-			__index = function(self, key)
-				-- Try GetSpellInfo first
-				local name, _, icon = GetSpellInfo(key)
-				if not name then
-					-- Fallback to GetItemInfo
-					name, _, _, _, _, _, _, _, _, icon = GetItemInfo(key)
-				end
-				if name then
-					spellNames[key] = name
-					spellNames[name] = name
-					spellIcons[key] = icon
-					spellIcons[name] = icon
-				else
-					spellNames[key] = tostring(key)
-					spellIcons[key] = tostring(key)
-					geterrorhandler()(("No information about spell or item #%q"):format(key))
-				end
-				return self[key]
-			end
-	}
-
-	spellNames = setmetatable({[false]=false}, spellMeta)
-	spellIcons = setmetatable({[false]=false}, spellMeta)
-
-	SimpleSelfRebuff.spellNames = spellNames
-	SimpleSelfRebuff.spellIcons = spellIcons
-end
 
 -------------------------------------------------------------------------------
 -- Initializing
@@ -809,7 +776,7 @@ SimpleSelfRebuff.classes.Buff = BuffClass
 
 function BuffClass.prototype:init(name, category, source, target, ...)
 	if type(name) ~= 'string' then
-		error('Argument #2 to BuffClass:new() should be a string, not %q', type(name))
+		err('Argument #2 to BuffClass:new() should be a string, not %q', type(name))
 	end
 
 	loadHash(self, ...)
@@ -828,7 +795,7 @@ function BuffClass.prototype:PostInit()
 	if self.fallback then
 		local fallbackBuff = self.category.buffs[self.fallback]
 		if not fallbackBuff then
-			error("Could not find fallback buff %s for %s", self.fallback, self.name)
+			err("Could not find fallback buff %s for %s", self.fallback, self.name)
 		end
 		self.fallback = fallbackBuff
 	end
@@ -836,7 +803,7 @@ end
 
 function BuffClass.prototype:ChangeName(name)
 	if type(name) ~= 'string' then
-		error(2, "Argument #2 to SetName should be a string, not %q", type(name))
+		err("Argument #2 to SetName should be a string, not %q", type(name))
 	elseif name == self.name then
 		return
 	end
@@ -936,7 +903,7 @@ SimpleSelfRebuff.classes.Category = CategoryClass
 
 function CategoryClass.prototype:init(name, target, source, ...)
 	if type(name) ~= 'string' then
-		error('Argument #2 to CategoryClass:new() should be a string, not %q', type(name))
+		err('Argument #2 to CategoryClass:new() should be a string, not %q', type(name))
 	end
 	CategoryClass.super.prototype.init(self)
 	self.name = name
@@ -984,30 +951,28 @@ end
 
 function CategoryClass.prototype:add(name, ...)
 
-	if name == false then
-		-- Sometimes GetSpellInfo() returns nil
-		-- (mainly when the spell is totally unknown, but they may be other reasons)
-		-- spellNames translates this case to 'false', we ignore thoses spells
-		-- here to prevent further errors
-		return
+	local texture
+	if type(name) == "number" then
+		name, _, texture = GetSpellInfo(name)
 	end
 
 	if self.buffs[name] then
-		error("%q already registered in category %q", name, self.name)
+		err("%q already registered in category %q", name, self.name)
 	end
 
 	local source = self.source and sources[self.source]
 	local target = self.target and targets[self.target]
 
 	if not source then
-		error("unknown source for %q: %q", name, self.source)
+		err("unknown source for %q: %q", name, self.source)
 	elseif not target then
-		error("unknown target for %q: %q", name, self.target)
+		err("unknown target for %q: %q", name, self.target)
 	end
 
 	local buff = BuffClass:new(name, self, source, target, ...)
 	self.buffs[buff.name] = buff
 	self.count = self.count + 1
+	buff.texture = texture or buff.texture
 
 	return self
 end
@@ -1037,7 +1002,7 @@ function CategoryClass.prototype:SetExpectedBuff(buff)
 	end
 	if buffName then
 		if not self.buffs[buffName] then
-			error("Unknown buff %q in category %q", buffName, self.name)
+			err("Unknown buff %q in category %q", buffName, self.name)
 		elseif not self.buffs[buffName].found then
 			buffName = nil
 		end
@@ -1264,11 +1229,11 @@ do
 	end
 
 	function BuffSourceClass.prototype:_GetBuffCooldown(buff)
-		error("_GetBuffCooldown should be overriden")
+		err("_GetBuffCooldown should be overriden")
 	end
 
 	function BuffSourceClass.prototype:_IsBuffUsable(buff)
-		error("_IsBuffUsable should be overriden")
+		err("_IsBuffUsable should be overriden")
 	end
 
 	-----------------------------------------------------------------------------
@@ -1550,7 +1515,7 @@ do
 	function WeaponBuffClass.prototype:init(target, slotName, infoIndex, validEquipLocs)
 		local slot = GetInventorySlotInfo(slotName)
 		if type(slot) ~= 'number' then
-			error("Invalid slot name %q => %q", slotName, slot)
+			err("Invalid slot name %q => %q", slotName, slot)
 		end
 
 		WeaponBuffClass.super.prototype.init(self, target)
@@ -1653,7 +1618,7 @@ do
 			tinsert(setupFuncs, func)
 			self:SendSignal('RegistryUpdated')
 		else
-			error("Arg #1 to RegisterBuffs must be a function, not %q", type(func))
+			err("Arg #1 to RegisterBuffs must be a function, not %q", type(func))
 		end
 	end
 
@@ -1671,8 +1636,8 @@ do
 		-- Load all funcs
 		while #setupFuncs > 0 do
 			func = tremove(setupFuncs)
-			local succes, msg = pcall(func, self, spellNames, L)
-			if not succes then
+			local success, msg = pcall(func, self, L)
+			if not success then
 				geterrorhandler()("Error in buff definition: " .. msg)
 			end
 		end
@@ -1691,7 +1656,7 @@ end
 
 function SimpleSelfRebuff:GetCategory(name, ...)
 	if type(name) ~= 'string' then
-		error("Argument #2 to GetCategory should be a string, not %q", name)
+		err("Argument #2 to GetCategory should be a string, not %q", name)
 	end
 	if not categories[name] then
 		categories[name] = CategoryClass:new(name, ...)
@@ -1700,10 +1665,13 @@ function SimpleSelfRebuff:GetCategory(name, ...)
 end
 
 function SimpleSelfRebuff:AddStandaloneBuff(name, ...)
-	if type(name) ~= 'string' then
-		error("Argument #2 to AddStandaloneBuff should be a string, not %q", name)
+	local catName = name
+	if type(name) == "number" then
+		catName = GetSpellInfo(name)
+	elseif type(name) ~= 'string' then
+		err("Argument #2 to AddStandaloneBuff should be a string or a number, not %q", name)
 	end
-	self:GetCategory(name):add(name, ...)
+	self:GetCategory(catName):add(name, ...)
 end
 
 function SimpleSelfRebuff:AddMultiStandaloneBuffs(...)
