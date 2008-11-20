@@ -1,6 +1,6 @@
 if not SimpleSelfRebuff then return end
 
-SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)	
+SimpleSelfRebuff:RegisterBuffSetup(function(self)	
 
 	-- Use 2.3 built-in functions
 	local cat = self:GetCategory(self.CATEGORY_TRACKING)
