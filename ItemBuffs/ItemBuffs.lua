@@ -54,26 +54,31 @@ function ItemBuffs:OnEnable()
 		buff.itemids = itemids
 		buff.found = true
 		
-		local setString = PT3 and PT3:GetSetString(setName) or setStrings[setName]
+		local setString = setStrings[setName]
 		if not setString then
 			err("Unknown item set %q for ItemBuff %q", setName, buff.name)
+		end
+		local pt3String = PT3 and PT3:GetSetString(setName)
+		if pt3String then
+			setString = setString .. ',' .. pt3String
 		end
 		
 		local texture, minLevel
 		for itemid, value in setString:gmatch("(%d+):(%d+)") do
-			itemid, value = tonumber(itemid), tonumber(value)
-			tinsert(itemids, itemid)
-			values[itemid] = value or 1
-			
-			local itemMinLevel, _, _, _, _, itemTexture = select(5, GetItemInfo(itemid))
-			texture = texture or itemTexture
-			if type(itemMinLevel) == "number" then
-				minLevel = minLevel and math.min(minLevel, itemMinLevel) or itemMinLevel
+			itemid = tonumber(itemid)
+			if not values[itemid] then
+				tinsert(itemids, itemid)
+				values[itemid] = tonumber(value) or 1
+				
+				local itemMinLevel, _, _, _, _, itemTexture = select(5, GetItemInfo(itemid))
+				texture = texture or itemTexture
+				if type(itemMinLevel) == "number" then
+					minLevel = minLevel and math.min(minLevel, itemMinLevel) or itemMinLevel
+				end
 			end
 		end
 		buff.texture = texture
 		buff.minLevel = minLevel
-		print("ItemBuff", buff.name, buff.texture, buff.minLevel)
 
 		local function sorter(a,b)
 			return values[a] > values[b]
