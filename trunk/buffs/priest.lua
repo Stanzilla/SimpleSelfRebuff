@@ -14,17 +14,15 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		27681  -- Prayer of Spirit
 	)
 
-	self:GetCategory(976):addMulti( -- Shadow Protection
-  	976,  -- Shadow Protection
-  	27683 -- Prayer of Shadow Protection
+	local shadowProtec = GetSpellInfo(976) -- Shadow Protection
+	self:GetCategory( shadowProtec ):addMulti( 
+  	shadowProtec,
+  	27683         -- Prayer of Shadow Protection
   )
 
 	self:AddMultiStandaloneBuffs(	
 		588,   -- Inner Fire
 		15473, -- Shadowform
-		--2651,  -- Elune's Grace
-		--18137, -- Shadowguard
-		--2652,  -- Touch of Weakness
 		6346   -- Fear Ward
 	)
 	
