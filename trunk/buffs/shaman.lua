@@ -1,7 +1,7 @@
 if not SimpleSelfRebuff then return end
 if select(2, UnitClass('player')) ~= 'SHAMAN' then return end
 
-SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
+SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	self:GetCategory(L['Elemental Shield']):addMulti(
 		  324, -- Lightning Shield

@@ -3,7 +3,7 @@ if select(2, UnitClass('player')) ~= 'WARLOCK' then return end
 
 local UnitExists = UnitExists
 
-SimpleSelfRebuff:RegisterBuffSetup(function(self, spellNames, L)
+SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	self:GetCategory(L['Armor']):addMulti(
 		687, -- Demon Skin
