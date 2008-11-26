@@ -162,8 +162,9 @@ function ItemBuffs:OnEnable()
 			-- Rogue poisons
 			if class == 'ROGUE' then
 				local function addPoison(itemId, setName)
-					category:add( GetItemInfo(itemId), 'setName', 'Consumable.Weapon Buff.Poison.'..setName)
-				end			
+					local itemName = GetItemInfo(itemId) or (setName .. ' Poison')
+					category:add( itemName, 'setName', 'Consumable.Weapon Buff.Poison.'..setName)
+				end
 				addPoison( 3775, 'Crippling' )
 				addPoison( 6947, 'Instant' )
 				addPoison( 5237, 'Mind Numbing' ) 
@@ -175,8 +176,8 @@ function ItemBuffs:OnEnable()
 			-- Warlock stones
 			if class == 'WARLOCK' then
 				category
-					:add( GetItemInfo(41169), 'setName', "Consumable.Weapon Buff.Firestone" )
-					:add( GetItemInfo(41191), 'setName', "Consumable.Weapon Buff.Spellstone" )
+					:add( GetItemInfo(41169) or 'Firestone', 'setName', "Consumable.Weapon Buff.Firestone" )
+					:add( GetItemInfo(41191) or 'Spellstone', 'setName', "Consumable.Weapon Buff.Spellstone" )
 			end
 
 		end
