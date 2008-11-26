@@ -30,8 +30,9 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:AddStandaloneBuff(16864, "checkRequirement", checkRequirement) -- Omen of Clarity
 	self:AddStandaloneBuff(16689, "checkRequirement", checkRequirement) -- Nature's Grasp
 	
-	local cat = self:GetCategory(1126) -- Mark of the Wild
-	cat:add(1126, "checkRequirement", checkRequirement)
-	cat:add(21849, "checkRequirement", checkRequirement) -- Gift of the Wild
+	local motw = GetSpellInfo(1126) -- Mark of the Wild
+	self:GetCategory(motw) 
+		:add(1126, "checkRequirement", checkRequirement)  -- Mark of the Wild
+		:add(21849, "checkRequirement", checkRequirement) -- Gift of the Wild
 	
 end)
