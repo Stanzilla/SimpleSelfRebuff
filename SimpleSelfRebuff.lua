@@ -259,7 +259,7 @@ local error = error
 
 local function err(msg, ...)
 	if select('#', ...) > 0 then
-		msg = msg:format(...)
+		msg = msg:format(tostringall(...))
 	end
 	return error(msg, 3)
 end
@@ -267,7 +267,7 @@ end
 
 local function warn(msg, ...)
 	if select('#', ...) > 0 then
-		msg = msg:format(...)
+		msg = msg:format(tostringall(...))
 	end
 	local _, ret = pcall(error, msg, 3)
 	geterrorhandler()(ret)
@@ -955,7 +955,10 @@ function CategoryClass.prototype:add(name, ...)
 	if type(name) == "number" then
 		name, _, texture = GetSpellInfo(name)
 	end
-
+	if not name then
+		err("invalid category name: %s", name);
+	end
+	
 	if self.buffs[name] then
 		err("%q already registered in category %q", name, self.name)
 	end
