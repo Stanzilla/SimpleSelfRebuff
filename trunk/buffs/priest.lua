@@ -15,7 +15,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	)
 
 	local shadowProtec = GetSpellInfo(976) -- Shadow Protection
-	self:GetCategory( shadowProtec ):addMulti( 
+	self:GetCategory(shadowProtec):addMulti( 
   	shadowProtec,
   	27683         -- Prayer of Shadow Protection
   )
@@ -23,7 +23,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:AddMultiStandaloneBuffs(	
 		588,   -- Inner Fire
 		15473, -- Shadowform
-		6346   -- Fear Ward
+		6346,   -- Fear Ward
+        15286  -- Vampiric Embrace
 	)
 	
 end)
