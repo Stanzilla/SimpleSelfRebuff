@@ -13,6 +13,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:GetCategory(L['Intellect']):addMulti(
 		1459, -- Arcane Intellect
 		23028, -- Arcane Brilliance
+        61024, -- Dalaran Intellect
+        61316, -- Dalaran Brilliance
 		46302  -- K'iru's Song of Victory -- can not be cast by player but conflicts with AI/AB
 	)
 	
