@@ -27,12 +27,9 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	-- Now the buffs
 	
 	self:AddStandaloneBuff(467, "checkRequirement", checkRequirement) -- Thorns
-	self:AddStandaloneBuff(16864, "checkRequirement", checkRequirement) -- Omen of Clarity
 	self:AddStandaloneBuff(16689, "checkRequirement", checkRequirement) -- Nature's Grasp
-	
-	local motw = GetSpellInfo(1126) -- Mark of the Wild
-	self:GetCategory(motw) 
-		:add(1126, "checkRequirement", checkRequirement)  -- Mark of the Wild
-		:add(21849, "checkRequirement", checkRequirement) -- Gift of the Wild
-	
+	self:GetCategory("Stats"):addMulti(
+		1126, -- Mark of the Wild
+		20217 -- Blessing of Kings -- ugly hack, but who cares
+	)
 end)

@@ -5,7 +5,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	self:GetCategory(L['Elemental Shield']):addMulti(
 		  324, -- Lightning Shield
-		24398, -- Water Shield
+		52127, -- Water Shield
 		  974  -- Earth Shield
 	)
 

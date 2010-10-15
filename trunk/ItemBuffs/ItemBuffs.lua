@@ -11,7 +11,6 @@ function ItemBuffs:OnEnable()
 
 	-- Shameless rip from PT3 (revision 46)
 	local setStrings = {
-		["Consumable.Weapon Buff.Firestone"]="41170:7,41169:14,41172:28,40773:35,41173:42",
 		["Consumable.Weapon Buff.Oil.Mana"]="20745:4,20747:8,20748:12,22521:14",
 		["Consumable.Weapon Buff.Oil.Wizard"]="20744:8,20746:16,20750:24,20749:36,22522:42",
 		["Consumable.Weapon Buff.Poison.Anesthetic"]="21835:153,43237:231",
@@ -20,7 +19,6 @@ function ItemBuffs:OnEnable()
 		["Consumable.Weapon Buff.Poison.Instant"]="6947:22,6949:34,6950:50,8926:76,8927:105,8928:130,21927:170,43230:245",
 		["Consumable.Weapon Buff.Poison.Mind Numbing"]="5237:60",
 		["Consumable.Weapon Buff.Poison.Wound"]="10918:17,10920:25,10921:38,10922:53,22055:112,43234:188,43235:231",
-		["Consumable.Weapon Buff.Spellstone"]="41191:10,41192:20,41193:30,41194:40,36896:20",
 		["Consumable.Weapon Buff.Stone.Sharpening Stone"]="23122,2862:2,2863:3,2871:4,7964:6,12404:8,18262,23528:12,23529:14",
 		["Consumable.Weapon Buff.Stone.Weight Stone"]="3239:2,3240:3,3241:4,7965:6,12643:8,28420:12,28421",
 	}
@@ -98,7 +96,6 @@ function ItemBuffs:OnEnable()
 				end
 			end
 			if newItemid ~= buff.currentItemid then
-				self:Debug("New item for %q: %q (%q)", buff.name, newItemid, itemName)
 				buff.currentItemid = newItemid
 				buff.currentItemName = newItemName
 			end
@@ -106,7 +103,6 @@ function ItemBuffs:OnEnable()
 	end
 
 	function ItemBuff:SetupSecureButton(buff, button)
-		self:Debug('Setup %s using item %q', buff.name, buff.currentItemName)
 		button:SetAttribute('*type*', 'item')
 		button:SetAttribute('*item*', buff.currentItemName)
 	end
@@ -172,14 +168,6 @@ function ItemBuffs:OnEnable()
 				addPoison(10918, 'Wound' ) 
 				addPoison(21835, 'Anesthetic' )
 			end
-			
-			-- Warlock stones
-			if class == 'WARLOCK' then
-				category
-					:add( GetItemInfo(41169) or 'Firestone', 'setName', "Consumable.Weapon Buff.Firestone" )
-					:add( GetItemInfo(41191) or 'Spellstone', 'setName', "Consumable.Weapon Buff.Spellstone" )
-			end
-
 		end
 
 		registerItems(self.CATEGORY_MAINHAND)
