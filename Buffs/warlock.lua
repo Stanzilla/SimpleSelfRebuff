@@ -6,13 +6,11 @@ local UnitExists = UnitExists
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	self:GetCategory(L['Armor']):addMulti(
-		687, -- Demon Skin
-		706, -- Demon Armor
+		687, -- Demon armor
 		28176 -- Fel Armor
 	)
 	
 	self:AddMultiStandaloneBuffs(
-		132, -- Detect Invisibility
 		5697 -- Unending Breath
 	)
 	

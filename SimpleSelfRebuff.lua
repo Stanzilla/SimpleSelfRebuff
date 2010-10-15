@@ -28,7 +28,7 @@ local GetWeaponEnchantInfo = _G.GetWeaponEnchantInfo
 local GetInventorySlotInfo = _G.GetInventorySlotInfo
 local GetTrackingTexture = _G.GetTrackingTexture
 local UnitBuff = _G.UnitBuff
-local GetSpellName = _G.GetSpellName
+local GetSpellBookItemName = _G.GetSpellBookItemName
 local GetItemInfo = _G.GetItemInfo
 
 local bit_band = _G.bit.band
@@ -1295,7 +1295,7 @@ do
 
 		local i = 1
 		while true do
-			local name = GetSpellName(i, BOOKTYPE_SPELL)
+			local name = GetSpellBookItemName(i, BOOKTYPE_SPELL)
 			if not name then
 				break
 			end
