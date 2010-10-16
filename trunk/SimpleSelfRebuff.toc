@@ -43,6 +43,4 @@ Buffs\warlock.lua
 Buffs\warrior.lua
 Buffs\deathknight.lua
 
-Buffs\tracking.lua
-
 modules.xml
