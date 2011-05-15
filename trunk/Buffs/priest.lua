@@ -10,9 +10,13 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		46302   -- K'iru's Song of Victory -- can not be cast by player but conflicts with PW:F/PF		
 	)
 	
+    self:GetCategory('Inner Spells'):addMulti(
+		73413,      -- Inner Will
+        588,        -- Inner Fire
+	)
+    
 	self:AddMultiStandaloneBuffs(
         79107, -- Prayer of Shadow Protection
-		588,   -- Inner Fire
 		15473, -- Shadowform
 		6346,  -- Fear Ward
         15286  -- Vampiric Embrace
