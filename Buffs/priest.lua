@@ -12,7 +12,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	
     self:GetCategory('Inner Spells'):addMulti(
 		73413,      -- Inner Will
-        588,        -- Inner Fire
+        588        -- Inner Fire
 	)
     
 	self:AddMultiStandaloneBuffs(
