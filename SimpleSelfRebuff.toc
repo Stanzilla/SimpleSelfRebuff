@@ -7,7 +7,7 @@
 ## X-Date: @project-date-iso@
 ## X-Category: Buffs
 ## X-License: GPL v2 or later
-## X-Credits: Sayclub (korean translation), Stan (spell ids)
+## X-Credits: Sayclub (korean translation), Stanzilla (spell ids)
 
 ## OptionalDeps: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0
 ## SavedVariables: SimpleSelfRebuffDB
