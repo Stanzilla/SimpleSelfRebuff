@@ -7,8 +7,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:GetCategory(L['Blessing'])
 		:add( 20217, 'subcat', 'kings'     ) -- Blessing of Kings
 		:add( 19740, 'subcat', 'might'     ) -- Blessing of Might
-		:add( 20911, 'subcat', 'sanctuary' ) -- Blessing of Sanctuary
-	
+			
 	self:GetCategory(L['Aura'])
 		:add( 465, 'subcat', 'devotion',      'mountFriendly', true ) -- Devotion Aura
 		:add( 7294, 'subcat', 'retribution',   'mountFriendly', true ) -- Retribution Aura
@@ -18,7 +17,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	self:GetCategory(L['Seal']):addMulti( 
 		20164, -- Seal of Justice
-		20165, -- Seal of Light
+		20165, -- Seal of Insight
+        20154, -- Seal of Righteousness
 		31801 -- Seal of Truth
 	)
 		
