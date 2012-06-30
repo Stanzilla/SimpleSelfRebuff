@@ -171,7 +171,7 @@ function Reminder:OnEnable()
 		}
 	})
 	db = self.db.profile
-	self:RegisterSink("Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
+	self:RegisterSink("SSR_Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
 	self:SetSinkStorage(db.sink20)
 	
 	local options = 	{
