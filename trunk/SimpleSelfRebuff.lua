@@ -1293,6 +1293,18 @@ do
 		local dirty = false
 		local knownSpells = new()
 
+		local tabs = 1
+		if GetSpecialization() ~= 0 then tabs = 2 end
+		
+		local name, texture, offset, last = GetSpellTabInfo(tabs)
+		local max = offset + last
+
+		for i = 1, max do
+			local name = GetSpellBookItemName(i, BOOKTYPE_SPELL)
+			if not name then break end
+			knownSpells[name] = true
+		end
+
 		local i = 1
 		while true do
 			local name = GetSpellBookItemName(i, BOOKTYPE_SPELL)
