@@ -19,7 +19,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	)
 	
 	self:AddMultiStandaloneBuffs(
-		5697, -- Unending Breath
+		5697 -- Unending Breath
 	)
 	
 	local function petExists(buff)
