@@ -1,4 +1,4 @@
-﻿## Interface: 40300
+﻿## Interface: 50001
 
 ## Title: SimpleSelfRebuff
 ## Notes: Rebuff yourself on mousewheel.
@@ -42,5 +42,6 @@ Buffs\shaman.lua
 Buffs\warlock.lua
 Buffs\warrior.lua
 Buffs\deathknight.lua
+Buffs\monk.lua
 
 modules.xml

@@ -11,8 +11,5 @@
 <Include file="Libs\LibSink-2.0\lib.xml"/>
 <Script file="Reminder\Reminder.lua"/>
 
-<Script file="Libs\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua"/>
-<Script file="Libs\LibPeriodicTable-3.1-Consumable\LibPeriodicTable-3.1-Consumable.lua"/>
-<Script file="ItemBuffs\ItemBuffs.lua"/>
 <!--@end-debug@-->
 </Ui>
