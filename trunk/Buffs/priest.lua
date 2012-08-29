@@ -16,10 +16,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	)
     
 	self:AddMultiStandaloneBuffs(
-        79107, -- Prayer of Shadow Protection
-		15473, -- Shadowform
-		6346,  -- Fear Ward
-        15286  -- Vampiric Embrace
+        15473, -- Shadowform
+		6346  -- Fear Ward
 	)
 	
 end)

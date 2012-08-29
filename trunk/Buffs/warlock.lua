@@ -10,8 +10,16 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		28176 -- Fel Armor
 	)
 	
+	self:GetCategory('+10% Spellpower'):addMulti(
+		109773,	-- Dark Intent
+		1459, -- Arcane Brilliance
+		61316, -- Dalaran Brilliance
+		77747, -- Burning Wrath
+		126309 -- Still Water
+	)
+	
 	self:AddMultiStandaloneBuffs(
-		5697 -- Unending Breath
+		5697, -- Unending Breath
 	)
 	
 	local function petExists(buff)
