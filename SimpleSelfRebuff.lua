@@ -1305,16 +1305,6 @@ do
 			knownSpells[name] = true
 		end
 
-		local i = 1
-		while true do
-			local name = GetSpellBookItemName(i, BOOKTYPE_SPELL)
-			if not name then
-				break
-			end
-			knownSpells[name] = true
-			i = i + 1
-		end
-
 		for buff in pairs(self.allBuffs) do
 			local found = knownSpells[buff.name]
 			if found and not buff.found then
