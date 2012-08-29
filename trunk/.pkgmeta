@@ -22,5 +22,4 @@ externals:
 move-folders:
   SimpleSelfRebuff/CastBinding: SimpleSelfRebuff_CastBinding
   SimpleSelfRebuff/DataObject: SimpleSelfRebuff_DataObject
-  SimpleSelfRebuff/ItemBuffs: SimpleSelfRebuff_ItemBuffs
   SimpleSelfRebuff/Reminder: SimpleSelfRebuff_Reminder
