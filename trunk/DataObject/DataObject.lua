@@ -60,6 +60,9 @@ function DataObject:OnEnable()
 		tooltip:AddLine(object.label, 1, 1, 1)
 		for name, module in SimpleSelfRebuff:IterateModules() do
 			if module:IsEnabled() and type(module.FeedTooltip) == 'function' then
+				if SimpleSelfRebuff:IsDebugging() then
+					tooltip:AddLine('-- '..module:GetName()..' --', 1, 1, 1)
+				end
 				module:FeedTooltip(tooltip)
 			end
 		end
@@ -78,6 +81,7 @@ function DataObject:OnEnable()
 			if module:IsEnabled() and type(module.FeedDataObject) == 'function' then
 				local modWeight, modText, modIcon = module:FeedDataObject()
 				if modWeight then
+					self:Debug('%s: weight=%s, text=%q icon=%q', module:GetName(), modWeight, modText, modIcon)
 					if modText and modWeight > textWeight then
 						textWeight, text = modWeight, modText
 					end
@@ -87,6 +91,7 @@ function DataObject:OnEnable()
 				end
 			end
 		end
+		self:Debug('Finally: text=%q (%s), icon=%q (%s)', text, textWeight, icon, iconWeight)
 		object.text = text
 		object.icon = icon
 	end
@@ -99,6 +104,15 @@ function DataObject:OnEnable()
 
 		for category, state, expected, actual, timeLeft in self.core:IterateCategories(STATE_SET) do
 			local name, timeLeft, r, g, b = GetBuffInfo(category, state, expected, actual, timeLeft)
+			if self.core:IsDebugging() then
+				timeLeft = ("state=%s, expected=%s, actual=%s, timeLeft=%s"):format(
+					tostring(self.core:fmtState(state)),
+					tostring(expected and expected.name),
+					tostring(actual and actual.name),
+					tostring(timeLeft)
+				)
+				name = name or "-"
+			end
 			if name then
 				tooltip:AddDoubleLine(name, timeLeft, r,g,b, r,g,b)
 			end

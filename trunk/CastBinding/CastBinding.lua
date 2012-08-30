@@ -111,6 +111,7 @@ function CastBinding:OnEnable()
 	end
 
 	function CastBinding:UpdateBinding()
+		self:Debug('updating binding');
 		if self.core:IsMonitoringActive() then
 
 			local pendingPriority, pendingState, pendingTimeLeft
@@ -130,6 +131,9 @@ function CastBinding:OnEnable()
 					end
 				end
 			end
+
+			self:Debug('pendingBuff=%q, prio=%q, state=%q, timeLeft=%q', pendingBuff, pendingPriority, pendingState, pendingTimeLeft)
+
 			self:SetBinding(pendingBuff)
 		else
 			self:SetBinding(false)
@@ -153,6 +157,7 @@ function CastBinding:OnEnable()
 			-- Binding
 			boundBuff = buff
 			self:Bind()
+			self:Debug('Bound buff: '..boundBuff.name)
 		else
 			boundBuff = nil
 			self:ClearButtonAttributes()
@@ -162,15 +167,20 @@ function CastBinding:OnEnable()
 
 	function CastBinding:OnButtonPreClick()
 		if InCombatLockdown() then return end
+		self:Debug('OnButtonPreClick-START')
 		if boundBuff then
 			if not boundBuff:IsInCooldown() and boundBuff:IsUsable() then
+				self:Debug('Setting up casting for '..boundBuff.name)
 				boundBuff:SetupSecureButton(button)
 			else
+				self:Debug(boundBuff.name.." in cooldown or not usable")
 				--self:ClearButtonAttributes()
 			end
 		else
+			self:Debug("No bound buff")
 			--self:ClearButtonAttributes()
 		end
+		self:Debug('OnButtonPreClick-END')
 	end
 
 	function CastBinding:OnButtonPostClick(button, key)
@@ -188,13 +198,16 @@ function CastBinding:OnEnable()
 	function CastBinding:OnButtonAttributeChanged(button, name, value)
 		if value == nil then
 			changedAttributes[name] = nil
+			self:Debug('Button attribute %q cleansed', name)
 		else
 			changedAttributes[name] = true
+			self:Debug('Button attribute %q set to %q', name, value)
 		end
 	end
 
 	function CastBinding:ClearButtonAttributes()
 		if button and next(changedAttributes) then
+			self:Debug('Clearing up binding button')
 			for name in pairs(changedAttributes) do
 				button:SetAttribute(name, nil)
 			end
@@ -202,6 +215,7 @@ function CastBinding:OnEnable()
 	end
 
 	function CastBinding:DummyBinding()
+		self:Debug("Do nothing")
 	end
 
 	function CastBinding:FeedDataObject()
@@ -212,6 +226,9 @@ function CastBinding:OnEnable()
 
 	local attrs = { "type", "target-slot", "unit", "spell" }
 	function CastBinding:FeedTooltip(tooltip)
+		if not self.core:IsDebugging() then
+			return
+		end
 		tooltip:AddDoubleLine('pendingBuff:', tostring(pendingBuff and pendingBuff.name))
 		if pendingBuff then
 			tooltip:AddDoubleLine('pendingBuff:IsUsable():', tostring(not not pendingBuff:IsUsable()))
