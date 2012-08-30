@@ -94,10 +94,6 @@ local SimpleSelfRebuff = SimpleSelfRebuff
 
 
 -- Static early initialization
---@alpha@
-local LDL = LibStub("LibDebugLog-1.0", true)
-local debugOptions
---@end-alpha@
 do
 	local self = SimpleSelfRebuff
 
@@ -179,31 +175,6 @@ do
 		},
 	}
 
---@alpha@	
-if LDL then
-	debugOptions ={
-		name = 'Debugging',
-		type = 'group',
-		order = 35,
-		args = {
-			diag = {
-				type = 'execute',
-				name = L['Diagnostic'],
-				desc = 'Dump some data to help bug fixing. Please includes this output into your bug reports.',
-				func = 'DumpDiagnostic',
-				order = 100,
-			},
-			debug = LDL:GetAce3OptionTable(SimpleSelfRebuff, 110),
-			debugHeader = {
-				name = 'Module debugging',
-				type = 'header',
-				order = 115,
-			},
-		},
-	}
-end
---@end-alpha@
-
 	self.CATEGORY_TRACKING = CATEGORY_TRACKING
 	self.CATEGORY_MAINHAND = CATEGORY_MAINHAND
 	self.CATEGORY_OFFHAND  = CATEGORY_OFFHAND
@@ -223,14 +194,6 @@ end
 	self.STATE_DONTCAST  = STATE_DONTCAST
 
 	self.L = L
-
---@debug@
-	SSR = self
-
-	self.categories = categories
-	self.sources = sources
-	self.targets = targets
---@end-debug@
 end
 
 -------------------------------------------------------------------------------
@@ -369,22 +332,11 @@ function SimpleSelfRebuff:OnInitialize()
 	db = self.db.profile
 	db_char = self.db.char
 
-	-- AceDebug-2.0 compat layer
-	self.SetDebugging = self.ToggleDebugLog
-	self.IsDebugging = self.IsDebugLogEnabled
-
 	-- Register options and chat commands
 	AceConfig:RegisterOptionsTable(self.name, self.options)
 	AceConfigDialog:SetDefaultSize(self.name, 450, 500)
 	self:RegisterChatCommand("ssr", "ChatCommand")
 	self:RegisterChatCommand("simpleselfrebuff", "ChatCommand")
-
---@alpha@
-	-- Debug config
-	if LDL and debugOptions then
-		AceConfig:RegisterOptionsTable(self.name..'_DEBUG', debugOptions)
-	end
---@end-alpha@
 
 	-- Blizzard panel
 	AceConfigDialog:AddToBlizOptions(self.name, self.name)
@@ -400,10 +352,6 @@ end
 function SimpleSelfRebuff:ChatCommand(input)
 	if not input or input:trim() == "" then
 		self:OpenGUI()
---@alpha@	
-	elseif input == "debug" then
-		AceConfigDialog:Open(self.name..'_DEBUG')
---@end-alpha@
 	else
 		LibStub("AceConfigCmd-3.0").HandleCommand(self, "ssr", self.name, input == "help" and "" or input)
 	end
@@ -570,7 +518,6 @@ end
 function SimpleSelfRebuff:SetMonitoringActive(value)
 	if value and not monitoringActive then
 		monitoringActive = true
-		self:Debug('Activated')
 
 		if not self.heartBeatTimer then
 			self.heartBeatTimer = self:ScheduleRepeatingTimer('SendHeartBeat', 1.5)
@@ -581,7 +528,6 @@ function SimpleSelfRebuff:SetMonitoringActive(value)
 
 	elseif not value and monitoringActive then
 		monitoringActive = nil
-		self:Debug('Disactivated')
 
 		if self.heartBeatTimer then
 			self:CancelTimer(self.heartBeatTimer, true)
@@ -682,16 +628,6 @@ do
 	end
 
 	function SimpleSelfRebuff:OnModuleCreated(module)
-		--@alpha@
-		if LDL then
-			if type(module.Debug) == 'function' then
-				local opts = debugOptions.args
-				local opt = LDL:GetAce3OptionTable(module, 120)
-				opt.name = module.moduleName
-				opts['debug_'..module.moduleName] = opt
-			end
-		end
-		--@end-alpha@
 		lodModules[module.moduleName] = nil
 	end
 
@@ -1031,7 +967,7 @@ function CategoryClass.prototype:GetActualBuff()
 	return self.actualBuff, timeLeft
 end
 
-function CategoryClass.prototype:SetActualBuff(current, ownBuff, timeLeft, debug)
+function CategoryClass.prototype:SetActualBuff(current, ownBuff, timeLeft)
 	if current and not ownBuff then
 		local expected = self:GetExpectedBuff()
 		if expected and (expected.subcat or current.subcat) and expected.subcat ~= current.subcat then
@@ -1044,9 +980,6 @@ function CategoryClass.prototype:SetActualBuff(current, ownBuff, timeLeft, debug
 	self.actualBuff = current
 	self.actualBuffExpiration = expiration
 	if dirty then
-		if debug then
-			SimpleSelfRebuff:Debug('%s buff changed : %q (%q)', self.name, current and current.name, current and expiration and expiration-GetTime())
-		end
 		SimpleSelfRebuff:SendSignal('BuffChanged')
 		self:RefreshState()
 		return true
@@ -1095,23 +1028,12 @@ function CategoryClass.prototype:RefreshState()
 		end
 		newState = expected:CustomizeState(newState)
 	end
-	--[[
-	SimpleSelfRebuff:Debug('%s: expected: %q, actual: %q, timeLeft: %q, state: %s',
-		self.name,
-		(expected and expected.name or nil),
-		(actual and actual.name or nil),
-		timeLeft,
-		SimpleSelfRebuff:fmtState(newState)
-	)
-	--]]
-
 	return self:SetState(newState)
 end
 
 function CategoryClass.prototype:SetState(newState)
 	if newState ~= self.state then
 		self.state = newState
-		SimpleSelfRebuff:Debug('%s state changed to %s',  self.name, SimpleSelfRebuff:fmtState(newState))
 		SimpleSelfRebuff:SendSignal('StateChanged', self, self:GetState())
 		return true
 	end
@@ -1152,10 +1074,6 @@ do
 		self:RegisterSignal('RegistryProcessed', 'OnRegistryProcessed', true)
 	end
 
-	function BuffAspectClass.prototype:Debug(...)
-		SimpleSelfRebuff:Debug(...)
-	end
-
 	function BuffAspectClass.prototype:_delegate(methodName, ...)
 		if type(self[methodName]) == "function" then
 			local success, msg = pcall(self[methodName], self, ...)
@@ -1178,7 +1096,6 @@ do
 
 	function BuffAspectClass.prototype:OnMonitoringEnable()
 		if not self._enabled then
-			--self:Debug('Enabling %q', self)
 			self:_delegate('OnEnable')
 			self._enabled = true
 		end
@@ -1186,7 +1103,6 @@ do
 
 	function BuffAspectClass.prototype:OnMonitoringDisable()
 		if self._enabled then
-			--self:Debug('Disabling %q', self)
 			self:UnregisterAllEvents()
 			self:UnregisterAllSignals()
 			self:_delegate('OnDisable')
@@ -1324,11 +1240,9 @@ do
 		for buff in pairs(self.allBuffs) do
 			local found = knownSpells[buff.name]
 			if found and not buff.found then
-				-- SimpleSelfRebuff:Debug('New spell: %q', buff.name)
 				buff.found = true
 				dirty = true
 			elseif not found and buff.found then
-				-- SimpleSelfRebuff:Debug('Old spell: %q', buff.name)
 				buff.found = nil
 				dirty = true
 			end
@@ -1342,7 +1256,6 @@ do
 	end
 
 	function SpellBuff:SetupSecureButton(buff, button)
-		self:Debug('Setup casting for spell %q', buff.name)
 		button:SetAttribute('*type*', 'spell')
 		button:SetAttribute('*spell*', buff.name)
 	end
@@ -1416,15 +1329,11 @@ do
 			local buff = buffName and self.buffs[buffName]
 			if buff then
 				seen[buff] = true
-				if buff:SetAsActualBuff(true, isMine, timeLeft) then
-					self:Debug('Found aura %s (%q)', buff.name, timeLeft)
-				end
 			end
 		end
 
 		for buff in pairs(self.allBuffs) do
 			if not seen[buff] and buff:IsActualBuff() then
-				self:Debug('%s faded out', buff.name)
 				buff:SetAsActualBuff(false)
 			end
 		end
@@ -1487,7 +1396,6 @@ do
 		for buff in pairs(self.allBuffs) do
 			local active = select(3, GetTrackingInfo(buff.trackingId))
 			if active then
-				SimpleSelfRebuff:Debug('Active tracking: %q', buff.name)
 				buff:SetAsActualBuff(true, true)
 				return
 			end
@@ -1503,7 +1411,6 @@ do
 	SimpleSelfRebuff.buffTypes.TrackingSource = TrackingBuffSource
 
 	function TrackingBuffSource:SetupSecureButton(buff, button)
-		self:Debug('Setup casting for tracking %q', buff.name)
 		button:SetAttribute('*type*', 'macro')
 		button:SetAttribute('*macrotext*', ('/run SetTracking(%s)'):format(buff.trackingId or "nil"))
 	end
@@ -1554,7 +1461,6 @@ do
 
 	function WeaponBuffClass.prototype:OnEnable()
 		if next(self.allBuffs) then
-			--self:Debug('Enabling weapon buffs')
 			self:RegisterBucketEvent('UNIT_INVENTORY_CHANGED', 0.5, 'CheckSlot')
 			self:RegisterSignal('HeartBeat', 'ScanWeaponBuffs')
 			self:RegisterSignal('BuffSetupChanged', 'ScanWeaponBuffs')
@@ -1588,7 +1494,6 @@ do
 	end
 
 	function WeaponBuffClass.prototype:SetupSecureButton(buff, button)
-		self:Debug('Setting up for buff %q on %q', buff.name, self.slot)
 		button:SetAttribute('*target-slot*', self.slot)
 	end
 
@@ -1645,7 +1550,6 @@ do
 
 	function SimpleSelfRebuff:ProcessRegistry()
 		if not #setupFuncs then
-			self:Debug('no setup funcs')
 			return
 		end
 
@@ -1700,8 +1604,4 @@ function SimpleSelfRebuff:AddMultiStandaloneBuffs(...)
 		local name = select(i, ...)
 		self:AddStandaloneBuff(name)
 	end
-end
-
-function SimpleSelfRebuff:Debug(...)
-	if LDL then LDL:Debug(...) end
 end

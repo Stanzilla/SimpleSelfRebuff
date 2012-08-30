@@ -151,9 +151,6 @@ function Reminder:OnEnable()
 	end
 
 	function Reminder:FeedTooltip(tooltip)
-		if not self.core:IsDebugging() then
-			return
-		end
 		for category, state in self.core:IterateCategories(STATE_SET) do
 			tooltip:AddDoubleLine(
 				states[category] and self.core:fmtState(states[category]) or category.name,
