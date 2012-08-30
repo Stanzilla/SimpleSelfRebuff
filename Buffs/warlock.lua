@@ -21,6 +21,6 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		return UnitExists('pet')
 	end
 	
-	self:AddStandaloneBuff( 19028, 'checkRequirement', petExists ) -- Soul Link
+	self:AddStandaloneBuff( 108415, 'checkRequirement', petExists ) -- Soul Link
 	
 end)
