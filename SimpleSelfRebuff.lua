@@ -89,13 +89,13 @@ local db, db_char
 
 SimpleSelfRebuff = LibStub("AceAddon-3.0"):NewAddon("SimpleSelfRebuff",
 	"AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceBucket-3.0"
-	,"LibDebugLog-1.0"
 )
 local SimpleSelfRebuff = SimpleSelfRebuff
 
 
 -- Static early initialization
 --@alpha@
+local LDL = LibStub("LibDebugLog-1.0", true)
 local debugOptions
 --@end-alpha@
 do
@@ -180,6 +180,7 @@ do
 	}
 
 --@alpha@	
+if LDL then
 	debugOptions ={
 		name = 'Debugging',
 		type = 'group',
@@ -192,7 +193,7 @@ do
 				func = 'DumpDiagnostic',
 				order = 100,
 			},
-			debug = LibStub('LibDebugLog-1.0'):GetAce3OptionTable(SimpleSelfRebuff, 110),
+			debug = LDL:GetAce3OptionTable(SimpleSelfRebuff, 110),
 			debugHeader = {
 				name = 'Module debugging',
 				type = 'header',
@@ -200,6 +201,7 @@ do
 			},
 		},
 	}
+end
 --@end-alpha@
 
 	self.CATEGORY_TRACKING = CATEGORY_TRACKING
@@ -379,7 +381,9 @@ function SimpleSelfRebuff:OnInitialize()
 
 --@alpha@
 	-- Debug config
-	AceConfig:RegisterOptionsTable(self.name..'_DEBUG', debugOptions)
+	if LDL and debugOptions then
+		AceConfig:RegisterOptionsTable(self.name..'_DEBUG', debugOptions)
+	end
 --@end-alpha@
 
 	-- Blizzard panel
@@ -679,11 +683,13 @@ do
 
 	function SimpleSelfRebuff:OnModuleCreated(module)
 		--@alpha@
-		if type(module.Debug) == 'function' then
-			local opts = debugOptions.args
-			local opt = LibStub('LibDebugLog-1.0'):GetAce3OptionTable(module, 120)
-			opt.name = module.moduleName
-			opts['debug_'..module.moduleName] = opt
+		if LDL then
+			if type(module.Debug) == 'function' then
+				local opts = debugOptions.args
+				local opt = LDL:GetAce3OptionTable(module, 120)
+				opt.name = module.moduleName
+				opts['debug_'..module.moduleName] = opt
+			end
 		end
 		--@end-alpha@
 		lodModules[module.moduleName] = nil
@@ -700,7 +706,7 @@ local modulePrototype = { core = SimpleSelfRebuff }
 SimpleSelfRebuff:EmbedSignals(modulePrototype)
 
 SimpleSelfRebuff.modulePrototype = modulePrototype
-SimpleSelfRebuff:SetDefaultModuleLibraries('AceEvent-3.0', 'LibDebugLog-1.0')
+SimpleSelfRebuff:SetDefaultModuleLibraries('AceEvent-3.0')
 SimpleSelfRebuff:SetDefaultModulePrototype(modulePrototype)
 SimpleSelfRebuff:SetDefaultModuleState(false)
 
@@ -1684,4 +1690,8 @@ function SimpleSelfRebuff:AddMultiStandaloneBuffs(...)
 		local name = select(i, ...)
 		self:AddStandaloneBuff(name)
 	end
+end
+
+function SimpleSelfRebuff:Debug(...)
+	if LDL then LDL:Debug(...) end
 end
