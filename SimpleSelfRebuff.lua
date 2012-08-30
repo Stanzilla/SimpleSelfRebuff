@@ -1306,6 +1306,16 @@ do
 		local max = offset + last
 
 		for i = 1, max do
+			local skilltype,id = GetSpellBookItemInfo(i, BOOKTYPE_SPELL)
+			if skillType =="FLYOUT" then
+				local fname, fdesc, fslots = GetFlyoutInfo(id)
+				for f=1,fslots do
+					local _,_,isknown,name = GetFlyoutSlotInfo(f)
+					if isknown and name then
+						knownSpells[name] = true
+					end
+				end
+			end
 			local name = GetSpellBookItemName(i, BOOKTYPE_SPELL)
 			if not name then break end
 			knownSpells[name] = true
