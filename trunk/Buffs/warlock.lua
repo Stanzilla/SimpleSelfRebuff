@@ -4,11 +4,6 @@ if select(2, UnitClass('player')) ~= 'WARLOCK' then return end
 local UnitExists = UnitExists
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
-
-	self:GetCategory(L['Armor']):addMulti(
-		687, -- Demon armor
-		28176 -- Fel Armor
-	)
 	
 	self:GetCategory('+10% Spellpower'):addMulti(
 		109773,	-- Dark Intent
