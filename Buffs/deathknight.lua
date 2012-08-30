@@ -8,6 +8,6 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:GetCategory("Presence"):addMulti(
 		48263, -- Blood Presence
 		48266, -- Frost Presence
-		48265, -- Unholy Presence
+		48265 -- Unholy Presence
 	)
 end) 
