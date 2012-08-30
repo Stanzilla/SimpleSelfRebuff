@@ -893,9 +893,9 @@ end
 
 function CategoryClass.prototype:add(name, ...)
 
-	local texture
+	local texture, _
 	if type(name) == "number" then
-		local name, _, texture = GetSpellInfo(name)
+		name, _, texture = GetSpellInfo(name)
 	end
 	if not name then
 		err("invalid category name: %s", name);
