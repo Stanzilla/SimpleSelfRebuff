@@ -10,6 +10,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
 	self:GetCategory("Non-Lethal"):addMulti(
 		3408, -- Crippling Poison 
+		108211, -- Leeching Poison
 		5761  -- Mind-Numbing Poison
 	)
 
