@@ -43,7 +43,7 @@ function Reminder:OnEnable()
 	}
 
 	local REMIND_COOLDOWN = 20
-	local Toast = LibStub("LibToast-1.0")
+	local Toast = LibStub("LibToast-1.0", true)
 	
 	-------------------------------------------------------------------------------
 	-- Option declaration
@@ -60,7 +60,9 @@ function Reminder:OnEnable()
 	end
 	
 	local function SpawnToast(source, text, r, g, b, ...)
-		Toast:Spawn("SSR_Toast", text)
+		if Toast then
+			Toast:Spawn("SSR_Toast", text)
+		end
 	end
 	
 	function Reminder:OnEnable(first)
@@ -171,7 +173,9 @@ function Reminder:OnEnable()
 		}
 	})
 	db = self.db.profile
-	self:RegisterSink("SSR_Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
+	if Toast then
+		self:RegisterSink("SSR_Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
+	end
 	self:SetSinkStorage(db.sink20)
 	
 	local options = 	{
@@ -213,12 +217,13 @@ function Reminder:OnEnable()
 	options.args.output.inline = true
 
 	self:RegisterOptions(options)
-	Toast:Register("SSR_Toast", function(toast, ...)
-		toast:SetTitle("Missing Buff")
-		toast:SetText(...)
-		--toast:MakePersistent()
-		toast:SetIconTexture(SimpleSelfRebuff.toast_icon)
-	end)
-	
+	if Toast then
+		Toast:Register("SSR_Toast", function(toast, ...)
+			toast:SetTitle("Missing Buff")
+			toast:SetText(...)
+			--toast:MakePersistent()
+			toast:SetIconTexture(SimpleSelfRebuff.toast_icon)
+		end)
+	end	
 	Reminder:OnEnable()
 end
