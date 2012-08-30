@@ -9,7 +9,7 @@
 ## X-License: GPL v2 or later
 ## X-Credits: Sayclub (korean translation), Stanzilla (spell ids)
 
-## OptionalDeps: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibToast-1.0
+## OptionalDeps: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0, LibToast-1.0
 ## SavedVariables: SimpleSelfRebuffDB
 
 #@no-lib-strip@
@@ -24,6 +24,7 @@ Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\AceConsole-3.0\AceConsole-3.0.xml
 Libs\AceDB-3.0\AceDB-3.0.xml
 Libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\LibDebugLog-1.0\lib.xml
 #@end-no-lib-strip@
 
 Locales\locale-enUS.lua

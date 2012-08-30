@@ -43,7 +43,7 @@ function Reminder:OnEnable()
 	}
 
 	local REMIND_COOLDOWN = 20
-	local Toast = LibStub("LibToast-1.0", true)
+	local Toast = LibStub("LibToast-1.0")
 	
 	-------------------------------------------------------------------------------
 	-- Option declaration
@@ -60,9 +60,7 @@ function Reminder:OnEnable()
 	end
 	
 	local function SpawnToast(source, text, r, g, b, ...)
-		if Toast then
-			Toast:Spawn("SSR_Toast", text)
-		end
+		Toast:Spawn("SSR_Toast", text)
 	end
 	
 	function Reminder:OnEnable(first)
@@ -151,6 +149,9 @@ function Reminder:OnEnable()
 	end
 
 	function Reminder:FeedTooltip(tooltip)
+		if not self.core:IsDebugging() then
+			return
+		end
 		for category, state in self.core:IterateCategories(STATE_SET) do
 			tooltip:AddDoubleLine(
 				states[category] and self.core:fmtState(states[category]) or category.name,
@@ -170,9 +171,7 @@ function Reminder:OnEnable()
 		}
 	})
 	db = self.db.profile
-	if Toast then
-		self:RegisterSink("SSR_Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
-	end
+	self:RegisterSink("SSR_Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
 	self:SetSinkStorage(db.sink20)
 	
 	local options = 	{
@@ -214,14 +213,12 @@ function Reminder:OnEnable()
 	options.args.output.inline = true
 
 	self:RegisterOptions(options)
-	if Toast then
-		Toast:Register("SSR_Toast", function(toast, ...)
-			toast:SetTitle("Missing Buff")
-			toast:SetText(...)
-			--toast:MakePersistent()
-			toast:SetIconTexture(SimpleSelfRebuff.toast_icon)
-		end)
-	end
+	Toast:Register("SSR_Toast", function(toast, ...)
+		toast:SetTitle("Missing Buff")
+		toast:SetText(...)
+		--toast:MakePersistent()
+		toast:SetIconTexture(SimpleSelfRebuff.toast_icon)
+	end)
 	
 	Reminder:OnEnable()
 end
