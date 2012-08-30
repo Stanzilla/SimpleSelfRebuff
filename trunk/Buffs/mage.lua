@@ -14,8 +14,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	        61316, -- Dalaran Brilliance
 		46302,  -- K'iru's Song of Victory -- can not be cast by player but conflicts with AI/AB
 		109773,	-- Dark Intent
-		77747, -- Burning Wrath
-
+		77747 -- Burning Wrath
 	)
 	
 	self:AddStandaloneBuff( 11426 ) -- Ice Barrier
