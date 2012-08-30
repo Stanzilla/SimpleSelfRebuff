@@ -8,13 +8,10 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		--13161, -- Aspect of the Beast
 		5118,  -- Aspect of the Cheetah
 		13165, -- Aspect of the Hawk
-        82661 -- Aspect of the Fox
+	        82661 -- Aspect of the Fox
 		--13163, -- Aspect of the Monkey
 		--61846  -- Aspect of the Dragonhawk
 	)
 		:add(	13159, 'subcat', 'pack' ) -- Aspect of the Pack
-		:add(	20043, 'subcat', 'wild' ) -- Aspect of the Wild
 
-	self:AddStandaloneBuff( 19506 ) -- Trueshot Aura
-	
 end)
