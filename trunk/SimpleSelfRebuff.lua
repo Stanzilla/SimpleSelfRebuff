@@ -1305,6 +1305,20 @@ do
 			knownSpells[name] = true
 		end
 
+		for i = 1, GetNumFlyouts() do
+			local n = GetFlyoutID(i)
+			local name, desc, spells, known = GetFlyoutInfo(n)
+			if known then
+				for j = 1, spells do
+					local spellid, spellknown = GetFlyoutSlotInfo(n,j)
+					if spellknown then
+						local name = (GetSpellInfo(spellid))
+						if name then knownSpells[name] = true end
+					end
+				end					
+			end
+		end
+
 		for buff in pairs(self.allBuffs) do
 			local found = knownSpells[buff.name]
 			if found and not buff.found then

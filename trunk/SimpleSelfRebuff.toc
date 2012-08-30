@@ -38,6 +38,7 @@ Buffs\hunter.lua
 Buffs\mage.lua
 Buffs\paladin.lua
 Buffs\priest.lua
+Buffs\rogue.lua
 Buffs\shaman.lua
 Buffs\warlock.lua
 Buffs\warrior.lua
