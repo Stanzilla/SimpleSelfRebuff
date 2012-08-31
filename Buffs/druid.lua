@@ -26,7 +26,6 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	
 	-- Now the buffs
 	
-	self:AddStandaloneBuff(467, "checkRequirement", checkRequirement) -- Thorns
 	self:AddStandaloneBuff(16689, "checkRequirement", checkRequirement) -- Nature's Grasp
 	self:GetCategory("Stats"):addMulti(
 		1126, -- Mark of the Wild
