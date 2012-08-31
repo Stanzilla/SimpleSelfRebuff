@@ -223,8 +223,6 @@ do
 	self.L = L
 
 --@debug@
-	SSR = self
-
 	self.categories = categories
 	self.sources = sources
 	self.targets = targets
@@ -628,7 +626,7 @@ do
 		if not addon or IsAddOnLoaded(addon) then
 			lodModules[name] = nil
 		else
-			loaded, reason = LoadAddOn(addon)
+			local loaded, reason = LoadAddOn(addon)
 			if not loaded then
 				self:Print(L["Could not load module %q: %s"]:format(name, reason))
 			end
@@ -951,9 +949,9 @@ end
 
 function CategoryClass.prototype:add(name, ...)
 
-	local texture
+	local texture, rank
 	if type(name) == "number" then
-		name, _, texture = GetSpellInfo(name)
+		name, rank, texture = GetSpellInfo(name)
 	end
 	if not name then
 		err("invalid category name: %s", name);
@@ -1654,7 +1652,7 @@ do
 
 		-- Load all funcs
 		while #setupFuncs > 0 do
-			func = tremove(setupFuncs)
+			local func = tremove(setupFuncs)
 			local success, msg = pcall(func, self, L)
 			if not success then
 				geterrorhandler()("Error in buff definition: " .. msg)
