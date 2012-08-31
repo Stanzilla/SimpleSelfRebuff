@@ -14,4 +14,8 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	)
 		:add(	13159, 'subcat', 'pack' ) -- Aspect of the Pack
 
+	self:AddMultiStandaloneBuffs(
+		77769 -- Trap Launcher
+	)
+
 end)
