@@ -13,14 +13,16 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		126309 -- Still Water
 	)
 	
-	self:AddMultiStandaloneBuffs(
-		5697 -- Unending Breath
-	)
 	
 	local function petExists(buff)
 		return UnitExists('pet')
 	end
 	
 	self:AddStandaloneBuff( 108415, 'checkRequirement', petExists ) -- Soul Link
-	
+
+	local function isSwimming(buff)
+		return IsSwimming() or false
+	end
+
+	self:AddStandaloneBuff(5697, 'checkRequirement', isSwimming ) -- Unending Breath
 end)
