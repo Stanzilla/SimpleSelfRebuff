@@ -13,7 +13,6 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		8024, -- Flametongue Weapon
 		8033, -- Frostbrand Weapon
 		8017, -- Rockbiter Weapon
-		8232, -- Windfury Weapon
 		51730 -- Earthliving Weapon
 	)
 
@@ -21,7 +20,6 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		8024, -- Flametongue Weapon
 		8033, -- Frostbrand Weapon
 		8017, -- Rockbiter Weapon
-		8232, -- Windfury Weapon
 		51730 -- Earthliving Weapon
 	)
 
