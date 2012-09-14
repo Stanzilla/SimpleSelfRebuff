@@ -1,7 +1,7 @@
 if not SimpleSelfRebuff then return end
 local SimpleSelfRebuff = SimpleSelfRebuff
 
-local Reminder = SimpleSelfRebuff:NewModule("Reminder", "LibSink-2.0", "AceTimer-3.0", "AceBucket-3.0")
+local Reminder = SimpleSelfRebuff:NewModule("Reminder", "LibSink-2.0", "AceTimer-3.0", "AceBucket-3.0", "LibToast-1.0")
 
 -- Really load module when first enabled
 function Reminder:OnEnable()
@@ -25,7 +25,7 @@ function Reminder:OnEnable()
 
 	local bit_band = bit.band
 	local bit_bor = bit.bor
-	
+
 	-------------------------------------------------------------------------------
 	-- Locals
 	-------------------------------------------------------------------------------
@@ -43,8 +43,7 @@ function Reminder:OnEnable()
 	}
 
 	local REMIND_COOLDOWN = 20
-	local Toast = LibStub("LibToast-1.0", true)
-	
+
 	-------------------------------------------------------------------------------
 	-- Option declaration
 	-------------------------------------------------------------------------------
@@ -58,13 +57,7 @@ function Reminder:OnEnable()
 		local c = db.colors[info.arg]
 		c.r, c.g, c.b = r, g, b
 	end
-	
-	local function SpawnToast(source, text, r, g, b, ...)
-		if Toast then
-			Toast:Spawn("SSR_Toast", text)
-		end
-	end
-	
+
 	function Reminder:OnEnable(first)
 		self:RegisterSignal('StateChanged', 'UpdateState')
 		self:RegisterBucketEvent(remindAllEvents, 1, 'RemindAll')
@@ -173,11 +166,12 @@ function Reminder:OnEnable()
 		}
 	})
 	db = self.db.profile
-	if Toast then
-		self:RegisterSink("SSR_Toast", "Toast", "Shows messages in a toast window.", SpawnToast)
-	end
+
+	self:DefineSinkToast("Missing Buff", function()
+		return SimpleSelfRebuff.toast_icon
+	end)
 	self:SetSinkStorage(db.sink20)
-	
+
 	local options = 	{
 		type = 'group',
 		name = L["Reminder"],
@@ -217,13 +211,5 @@ function Reminder:OnEnable()
 	options.args.output.inline = true
 
 	self:RegisterOptions(options)
-	if Toast then
-		Toast:Register("SSR_Toast", function(toast, ...)
-			toast:SetTitle("Missing Buff")
-			toast:SetText(...)
-			--toast:MakePersistent()
-			toast:SetIconTexture(SimpleSelfRebuff.toast_icon)
-		end)
-	end	
 	Reminder:OnEnable()
 end
