@@ -67,7 +67,7 @@ function DataObject:OnEnable()
 			end
 		end
 	end
-
+	
 	function DataObject:OnEnable()
 		self:RegisterSignal('DisplayChanged', 'Update')
 		self:RegisterSignal('StateChanged', 'Update')

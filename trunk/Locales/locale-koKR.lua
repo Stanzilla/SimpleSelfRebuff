@@ -1,5 +1,6 @@
+local ADDON_NAME, ADDON_TABLE = ...
 -- vim:enc=UTF-8
-local L = LibStub("AceLocale-3.0"):NewLocale("SimpleSelfRebuff","koKR",false)
+local L = LibStub("AceLocale-3.0"):NewLocale(ADDON_NAME,"koKR",false)
 if not L then return end
 L["%s expires in %s."] = "%s 버프가 %s 안에 없어집니다."
 L["%s is missing."] = "%s 버프가 없습니다."

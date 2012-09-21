@@ -1,5 +1,6 @@
+local ADDON_NAME, ADDON_TABLE = ...
 -- vim:enc=UTF-8
-local L = LibStub("AceLocale-3.0"):NewLocale("SimpleSelfRebuff","frFR",false)
+local L = LibStub("AceLocale-3.0"):NewLocale(ADDON_NAME,"frFR",false)
 if not L then return end
 L["%s expires in %s."] = "%s expire dans %s."
 L["%s is missing."] = "%s est absent."
