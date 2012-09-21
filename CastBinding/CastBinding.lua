@@ -43,8 +43,12 @@ function CastBinding:OnEnable()
 	
 	local changedAttributes = {}
 
-	function CastBinding:OnEnable()
+	function CastBinding:UpdateProfile()
+		db = self.db.profile
+	end
 
+	function CastBinding:OnEnable()
+		self:RegisterSignal('UpdateProfile')
 		self:RegisterSignal('MonitoringEnabled', 'UpdateBinding')
 		self:RegisterSignal('StateChanged', 'UpdateBinding')
 		self:RegisterEvent('PLAYER_CONTROL_GAINED', 'UpdateBinding')

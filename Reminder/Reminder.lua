@@ -58,8 +58,13 @@ function Reminder:OnEnable()
 		c.r, c.g, c.b = r, g, b
 	end
 
+	function Reminder:UpdateProfile()
+		db = self.db.profile
+	end
+
 	function Reminder:OnEnable(first)
 		self:RegisterSignal('StateChanged', 'UpdateState')
+		self:RegisterSignal('UpdateProfile')
 		self:RegisterBucketEvent(remindAllEvents, 1, 'RemindAll')
 
 		lastRemindTime = new()

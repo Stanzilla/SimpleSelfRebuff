@@ -1,9 +1,10 @@
+local ADDON_NAME, ADDON_TABLE = ...
 -------------------------------------------------------------------------------
 -- Localization libraries
 -------------------------------------------------------------------------------
 
 -- Use a developping locale, so that I can put anything in L
-local L = LibStub("AceLocale-3.0"):GetLocale("SimpleSelfRebuff")
+local L = LibStub("AceLocale-3.0"):GetLocale(ADDON_NAME)
 --local L = setmetatable({}, {__index=function(t,k) t[k]=k return k end})
 
 -------------------------------------------------------------------------------
@@ -81,13 +82,13 @@ local buffToCast
 
 local monitoringActive
 
-local db, db_char
+local db
 
 -------------------------------------------------------------------------------
 -- Addon declaration
 -------------------------------------------------------------------------------
 
-SimpleSelfRebuff = LibStub("AceAddon-3.0"):NewAddon("SimpleSelfRebuff",
+SimpleSelfRebuff = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME,
 	"AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceBucket-3.0"
 	,"LibDebugLog-1.0"
 )
@@ -356,14 +357,20 @@ function SimpleSelfRebuff:OnInitialize()
 			disableWhileResting = false,
 			shiftOverrides = false,
 			modules = { ['*'] = true },
-		},
-		char = {
-			categories = {}
+			char = {
+				categories = {}
+			},
 		},
 	})
 
+	if self.db.char.categories then 
+		for k,v in pairs(self.db.char.categories) do
+			self.db.profile.char.categories[k] = v
+		end
+		self.db.char = nil
+	end
+
 	db = self.db.profile
-	db_char = self.db.char
 
 	-- AceDebug-2.0 compat layer
 	self.SetDebugging = self.ToggleDebugLog
@@ -385,6 +392,24 @@ function SimpleSelfRebuff:OnInitialize()
 
 	-- Look for loadable modules
 	self:ScanLoadOnDemandModules()
+
+	self.db.RegisterCallback(self, "OnProfileChanged", "ProfileChanged")
+	self.db.RegisterCallback(self, "OnProfileCopied", "ProfileChanged")
+	self.db.RegisterCallback(self, "OnProfileReset", "ProfileChanged")
+
+	local LibDualSpec = LibStub('LibDualSpec-1.0', true)
+	if LibDualSpec then
+		self.options.args.profiles = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db)
+		LibDualSpec:EnhanceDatabase(self.db, ADDON_NAME)
+		LibDualSpec:EnhanceOptions(self.options.args.profiles, self.db)
+	end
+end
+
+function SimpleSelfRebuff:ProfileChanged()
+	db = self.db.profile
+	self:AvailableBuffsChanged()
+	self:SendSignal('UpdateProfile')
+	self:SendSignal('BuffSetupChanged')
 end
 
 function SimpleSelfRebuff:OpenGUI()
@@ -987,7 +1012,7 @@ function CategoryClass.prototype:addMulti(...)
 end
 
 function CategoryClass.prototype:GetExpectedBuff()
-	local name = db_char.categories[self.name]
+	local name = db.char.categories[self.name]
 	local buff = name and self.buffs[name]
 	if buff and buff:IsCastable() then
 		return buff
@@ -1008,8 +1033,8 @@ function CategoryClass.prototype:SetExpectedBuff(buff)
 			buffName = nil
 		end
 	end
-	if buffName ~= db_char.categories[self.name] then
-		db_char.categories[self.name] = buffName
+	if buffName ~= db.char.categories[self.name] then
+		db.char.categories[self.name] = buffName
 		SimpleSelfRebuff:SendSignal('BuffSetupChanged', buffName, self.name)
 		self:RefreshState()
 	end
@@ -1282,6 +1307,7 @@ do
 
 	function SpellBuff:OnEnable()
 		if next(self.allBuffs) then
+			self:RegisterSignal('UpdateProfile', 'ScanSpells')
 			self:RegisterEvent('SPELLS_CHANGED', 'ScanSpells')
 			self:ScanSpells()
 		end
