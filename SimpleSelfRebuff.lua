@@ -357,18 +357,9 @@ function SimpleSelfRebuff:OnInitialize()
 			disableWhileResting = false,
 			shiftOverrides = false,
 			modules = { ['*'] = true },
-			char = {
-				categories = {}
-			},
+			categories = {}
 		},
 	})
-
-	if self.db.char.categories then 
-		for k,v in pairs(self.db.char.categories) do
-			self.db.profile.char.categories[k] = v
-		end
-		self.db.char = nil
-	end
 
 	db = self.db.profile
 
@@ -407,9 +398,7 @@ end
 
 function SimpleSelfRebuff:ProfileChanged()
 	db = self.db.profile
-	self:AvailableBuffsChanged()
 	self:SendSignal('UpdateProfile')
-	self:SendSignal('BuffSetupChanged')
 end
 
 function SimpleSelfRebuff:OpenGUI()
@@ -1012,7 +1001,7 @@ function CategoryClass.prototype:addMulti(...)
 end
 
 function CategoryClass.prototype:GetExpectedBuff()
-	local name = db.char.categories[self.name]
+	local name = db.categories[self.name]
 	local buff = name and self.buffs[name]
 	if buff and buff:IsCastable() then
 		return buff
@@ -1033,8 +1022,8 @@ function CategoryClass.prototype:SetExpectedBuff(buff)
 			buffName = nil
 		end
 	end
-	if buffName ~= db.char.categories[self.name] then
-		db.char.categories[self.name] = buffName
+	if buffName ~= db.categories[self.name] then
+		db.categories[self.name] = buffName
 		SimpleSelfRebuff:SendSignal('BuffSetupChanged', buffName, self.name)
 		self:RefreshState()
 	end
@@ -1407,6 +1396,7 @@ do
 			self:RegisterEvent('UNIT_AURA')
 			self:RegisterEvent('UNIT_AURASTATE', 'UNIT_AURA')
 			self:RegisterSignal('BuffSetupChanged', RequireAuraScan)
+			self:RegisterSignal('UpdateProfile', RequireAuraScan)
 			RequireAuraScan()
 		end
 	end
@@ -1490,6 +1480,7 @@ do
 		self:RegisterEvent('MINIMAP_UPDATE_TRACKING')
 		self:RegisterEvent('UNIT_AURA')
 		self:RegisterSignal('BuffSetupChanged', 'ScanTracking')
+		self:RegisterSignal('UpdateProfile', 'ScanTracking')
 		self:ScanTracking()
 	end
 	
@@ -1580,6 +1571,7 @@ do
 			self:RegisterBucketEvent('UNIT_INVENTORY_CHANGED', 0.5, 'CheckSlot')
 			self:RegisterSignal('HeartBeat', 'ScanWeaponBuffs')
 			self:RegisterSignal('BuffSetupChanged', 'ScanWeaponBuffs')
+			self:RegisterSignal('UpdateProfile', 'ScanWeaponBuffs')
 			self:CheckSlot()
 			self:ScanWeaponBuffs()
 		end
