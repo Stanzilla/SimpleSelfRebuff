@@ -29,6 +29,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:AddStandaloneBuff(16689, "checkRequirement", checkRequirement) -- Nature's Grasp
 	self:GetCategory("Stats"):addMulti(
 		1126, -- Mark of the Wild
-		20217 -- Blessing of Kings -- ugly hack, but who cares
+		20217, -- Blessing of Kings -- ugly hack, but who cares
+		115921 -- Legacy of the Emperor
 	)
 end)

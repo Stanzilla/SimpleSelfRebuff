@@ -25,4 +25,9 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		51730 -- Earthliving Weapon
 	)
 
+	local function isSwimming(buff)
+		return IsSwimming() or false
+	end
+
+	self:AddStandaloneBuff(546, 'checkRequirement', isSwimming ) -- Water Walking
 end)

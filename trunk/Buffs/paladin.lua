@@ -10,7 +10,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 			
 	self:GetCategory(L['Seal']):addMulti( 
 		20165, -- Seal of Insight
-        20154, -- Seal of Righteousness
+	        20154, -- Seal of Righteousness
 		31801 -- Seal of Truth
 	)
 		
