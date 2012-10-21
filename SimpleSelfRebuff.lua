@@ -363,6 +363,15 @@ function SimpleSelfRebuff:OnInitialize()
 
 	db = self.db.profile
 
+	if db.char and db.char.categories then
+		for k,v in pairs(db.char.categories) do
+			db.categories[k] = v
+		end
+		db.char.categories = nil
+		db.char = nil
+	end
+
+
 	-- AceDebug-2.0 compat layer
 	self.SetDebugging = self.ToggleDebugLog
 	self.IsDebugging = self.IsDebugLogEnabled
