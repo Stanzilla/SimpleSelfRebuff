@@ -8,7 +8,6 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		--13161, -- Aspect of the Beast
 		5118,  -- Aspect of the Cheetah
 		13165, -- Aspect of the Hawk
-	    82661, -- Aspect of the Fox
 		109260 -- Aspect of the Iron Hawk
 		--13163, -- Aspect of the Monkey
 		--61846  -- Aspect of the Dragonhawk
