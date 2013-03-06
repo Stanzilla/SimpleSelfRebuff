@@ -5,7 +5,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	
 	self:GetCategory(L['Fortitude']):addMulti(
 		21562,  -- Power Word: Fortitude
-	        6307,   -- Blood Pact
+		109773, -- Dark Intent
 		469,    -- Commanding Shout
 		46302   -- K'iru's Song of Victory -- can not be cast by player but conflicts with PW:F/PF		
 	)
