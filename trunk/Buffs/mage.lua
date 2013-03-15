@@ -1,4 +1,7 @@
+if not LibStub then return end
+local SimpleSelfRebuff = LibStub("AceAddon-3.0"):GetAddon("SimpleSelfRebuff", true)
 if not SimpleSelfRebuff then return end
+
 if select(2, UnitClass('player')) ~= 'MAGE' then return end
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
@@ -9,14 +12,11 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		30482  -- Molten Armor
 	)
 	
-	self:GetCategory(L['Intellect']):addMulti(
-		1459, -- Arcane Brilliance
-	        61316, -- Dalaran Brilliance
-		46302,  -- K'iru's Song of Victory -- can not be cast by player but conflicts with AI/AB
-		109773,	-- Dark Intent
-		77747 -- Burning Wrath
-	)
-	
 	self:AddStandaloneBuff( 11426 ) -- Ice Barrier
 	
+	local buff = self:GetCategory(L['Intellect']):addMulti(
+		1459, -- Arcane Brilliance
+	        61316 -- Dalaran Brilliance
+	)
+	buff.checkRequirement = function() return not (GetRaidBuffTrayAuraInfo(5) and GetRaidBuffTrayAuraInfo(7)) end
 end)
