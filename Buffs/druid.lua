@@ -1,4 +1,7 @@
+if not LibStub then return end
+local SimpleSelfRebuff = LibStub("AceAddon-3.0"):GetAddon("SimpleSelfRebuff", true)
 if not SimpleSelfRebuff then return end
+
 if select(2, UnitClass('player')) ~= 'DRUID' then return end
 
 local GetShapeshiftForm = GetShapeshiftForm
@@ -20,16 +23,14 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 			end,		
 	}
 	
-	local function checkRequirement()
+	local function NotShapeshifted()
 		return not db.disableWhileShapshifted or GetShapeshiftForm(true) == 0
 	end
-	
-	-- Now the buffs
-	
-	self:AddStandaloneBuff(16689, "checkRequirement", checkRequirement) -- Nature's Grasp
-	self:GetCategory("Stats"):addMulti(
-		1126, -- Mark of the Wild
-		20217, -- Blessing of Kings -- ugly hack, but who cares
-		115921 -- Legacy of the Emperor
-	)
+	self:AddStandaloneBuff(16689, "checkRequirement", NotShapeshifted) -- Nature's Grasp
+
+
+	local function MarkOfTheWild()
+		return not (GetRaidBuffTrayAuraInfo(1))
+	end	
+	self:AddStandaloneBuff( 1126, 'checkRequirement', MarkOfTheWild ) -- Mark of the Wild
 end)

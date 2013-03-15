@@ -1,4 +1,7 @@
+if not LibStub then return end
+local SimpleSelfRebuff = LibStub("AceAddon-3.0"):GetAddon("SimpleSelfRebuff", true)
 if not SimpleSelfRebuff then return end
+
 if select(2, UnitClass('player')) ~= 'ROGUE' then return end
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
