@@ -5,7 +5,7 @@ if not SimpleSelfRebuff then return end
 if select(2, UnitClass('player')) ~= 'PRIEST' then return end
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
-	local function Fortitudej()
+	local function Fortitude()
 		return not (GetRaidBuffTrayAuraInfo(2)) 
 	end	
 	self:AddStandaloneBuff( 21562, 'checkRequirement', Fortitude ) -- Fortitude
