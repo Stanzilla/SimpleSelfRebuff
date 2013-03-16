@@ -1,16 +1,15 @@
 if not LibStub then return end
 local SimpleSelfRebuff = LibStub("AceAddon-3.0"):GetAddon("SimpleSelfRebuff", true)
 if not SimpleSelfRebuff then return end
-
 if select(2, UnitClass('player')) ~= 'DRUID' then return end
 
-local GetShapeshiftForm = GetShapeshiftForm
+local function Stats()
+	return not (GetRaidBuffTrayAuraInfo(1))
+end	
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 
-	-- Specific option for druid
 	local db = self.db.profile
-	
 	self.options.args.general.args.notWhileShapshifted = {
 			type = 'toggle',
 			name = L["Disable while shapeshifted"],
@@ -23,14 +22,9 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 			end,		
 	}
 	
-	local function NotShapeshifted()
-		return not db.disableWhileShapshifted or GetShapeshiftForm(true) == 0
+	local function Shift()
+		return not self.db.profile.disableWhileShapshifted or GetShapeshiftForm(true) == 0
 	end
-	self:AddStandaloneBuff(16689, "checkRequirement", NotShapeshifted) -- Nature's Grasp
-
-
-	local function MarkOfTheWild()
-		return not (GetRaidBuffTrayAuraInfo(1))
-	end	
-	self:AddStandaloneBuff( 1126, 'checkRequirement', MarkOfTheWild ) -- Mark of the Wild
+	self:AddStandaloneBuff(16689, "checkRequirement", Shift) -- Nature's Grasp
+	self:AddStandaloneBuff( 1126, 'checkRequirement', Stats ) -- Mark of the Wild
 end)
