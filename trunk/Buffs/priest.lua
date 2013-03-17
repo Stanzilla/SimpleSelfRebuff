@@ -8,8 +8,7 @@ local function Fortitude()
 end	
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
-	local buff = self:AddStandaloneBuff(21562) -- Fortitude
-	buff.checkRequirement = Fortitude
+	self:AddStandaloneBuff(21562, 'checkRequirement', Inner) -- Fortitude
 
 	local function Inner()
 		local inner = self.db.profile.categories["Inner Spells"]
