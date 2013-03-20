@@ -8,12 +8,14 @@ local function Fortitude()
 end	
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
-	self:AddStandaloneBuff(21562, 'checkRequirement', Inner) -- Fortitude
+	self:AddStandaloneBuff(21562, 'checkRequirement', Fortitude) -- Fortitude
 
 	local function Inner()
 		local inner = self.db.profile.categories["Inner Spells"]
 		return not UnitAura("player", inner)
 	end
+
+
 	local buff = self:GetCategory('Inner Spells'):addMulti(
 		73413,      -- Inner Will
 		588        -- Inner Fire
