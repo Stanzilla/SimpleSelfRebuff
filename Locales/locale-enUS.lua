@@ -29,6 +29,7 @@ L["General"] = true
 L["Ignored"] = true
 L["Intellect"] = true
 L["Key binding"] = true
+L["Legacy"] = true
 L["Magic Alteration"] = true
 L["Main weapon"] = true
 L["Mana Oil"] = true
