@@ -13,7 +13,6 @@ end
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	self:AddStandaloneBuff( 109773, 'checkRequirement', DarkIntent ) -- Dark Intent
-	self:AddStandaloneBuff( 108415, 'checkRequirement', petExists ) -- Soul Link
 	self:AddStandaloneBuff( 108503, 'checkRequirement', petExists ) -- Grimoire of Sacrifice
 	self:AddStandaloneBuff(5697, 'checkRequirement', IsSwimming ) -- Unending Breath
 end)
