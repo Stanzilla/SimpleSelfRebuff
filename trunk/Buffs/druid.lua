@@ -25,6 +25,5 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	local function Shift()
 		return not self.db.profile.disableWhileShapshifted or GetShapeshiftForm(true) == 0
 	end
-	self:AddStandaloneBuff(16689, "checkRequirement", Shift) -- Nature's Grasp
-	self:AddStandaloneBuff( 1126, 'checkRequirement', Stats ) -- Mark of the Wild
+	self:AddStandaloneBuff(1126, 'checkRequirement', Stats) -- Mark of the Wild
 end)

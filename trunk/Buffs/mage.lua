@@ -23,7 +23,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	
 	local buff = self:GetCategory(L['Intellect']):addMulti(
 		1459, -- Arcane Brilliance
-	        61316 -- Dalaran Brilliance
+	    61316 -- Dalaran Brilliance
 	)
 	buff.checkRequirement = Brilliance 
 
