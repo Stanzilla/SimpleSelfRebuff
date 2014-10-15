@@ -8,19 +8,6 @@ local function Brilliance()
 end
 
 SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
-	local function Armor()
-		local armor = self.db.profile.categories[L["Armor"]]
-		return not UnitAura("player", armor)
-	end
-
-	local buff = self:GetCategory(L['Armor']):addMulti(
-		7302, -- Ice Armor
-		6117, -- Mage Armor
-		30482  -- Molten Armor
-	)
-	buff.checkRequirement = Armor
-
-	
 	local buff = self:GetCategory(L['Intellect']):addMulti(
 		1459, -- Arcane Brilliance
 	    61316 -- Dalaran Brilliance
