@@ -1,7 +1,6 @@
 ﻿## Interface: 60000
-
 ## Title: SimpleSelfRebuff
-## Notes: Rebuff yourself on mousewheel.
+## Notes: Rebuff yourself with the mousewheel.
 ## Author: Adirelle
 ## Version: @project-version@ 
 ## X-Date: @project-date-iso@
@@ -12,21 +11,7 @@
 ## OptionalDeps: Ace3, LibSink-2.0, LibPeriodicTable-3.1, LibPeriodicTable-3.1-Consumable, LibDebugLog-1.0, LibToast-1.0, LibDualSpec-1.0
 ## SavedVariables: SimpleSelfRebuffDB
 
-#@no-lib-strip@
-Libs\LibStub\LibStub.lua
-Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
-Libs\AceAddon-3.0\AceAddon-3.0.xml
-Libs\AceEvent-3.0\AceEvent-3.0.xml
-Libs\AceTimer-3.0\AceTimer-3.0.xml
-Libs\AceBucket-3.0\AceBucket-3.0.xml
-Libs\AceGUI-3.0\AceGUI-3.0.xml
-Libs\AceConfig-3.0\AceConfig-3.0.xml
-Libs\AceConsole-3.0\AceConsole-3.0.xml
-Libs\AceDB-3.0\AceDB-3.0.xml
-Libs\AceLocale-3.0\AceLocale-3.0.xml
-Libs\LibDebugLog-1.0\lib.xml
-Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua
-#@end-no-lib-strip@
+embeds.xml
 
 Locales\locale-enUS.lua
 Locales\locale-frFR.lua
