@@ -15,23 +15,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 		52127, -- Water Shield
 		  974  -- Earth Shield
 	)
-	buff.checkRequirement = Shield
-
-	self:GetCategory(self.CATEGORY_MAINHAND):addMulti(
-		8024, -- Flametongue Weapon
-		8033, -- Frostbrand Weapon
-		8017, -- Rockbiter Weapon
-		8232, -- Windfury Weapon
-		51730 -- Earthliving Weapon
-	)
-
-	self:GetCategory(self.CATEGORY_OFFHAND):addMulti(
-		8024, -- Flametongue Weapon
-		8033, -- Frostbrand Weapon
-		8017, -- Rockbiter Weapon
-		8232, -- Windfury Weapon
-		51730 -- Earthliving Weapon
-	)
+	buff.checkRequirement = Shield	
 
 	self:AddStandaloneBuff(546, 'checkRequirement', IsSwimming ) -- Water Walking
 end)
