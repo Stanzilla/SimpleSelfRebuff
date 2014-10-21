@@ -1,6 +1,4 @@
-if not LibStub then return end
 local SimpleSelfRebuff = LibStub("AceAddon-3.0"):GetAddon("SimpleSelfRebuff", true)
-if not SimpleSelfRebuff then return end
 if select(2, UnitClass('player')) ~= 'PALADIN' then return end
 
 local mastery = GetSpellInfo(19740)
@@ -16,9 +14,9 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	end
 
 	local buff = self:GetCategory(L['Blessing'])
-		:add( 20217, 'subcat', 'stats'     ) -- Blessing of Kings
-		:add( 19740, 'subcat', 'mastery'     ) -- Blessing of Might
+		:add( 20217, 'subcat', 'stats') -- Blessing of Kings
+		:add( 19740, 'subcat', 'mastery') -- Blessing of Might
 	buff.checkRequirement = Blessing
 			
-	self:AddStandaloneBuff( 25780 ) -- Righteous Fury
+	self:AddStandaloneBuff(25780) -- Righteous Fury
 end)
