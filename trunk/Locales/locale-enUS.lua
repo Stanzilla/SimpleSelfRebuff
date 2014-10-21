@@ -55,3 +55,4 @@ L["Weight Stone"] = true
 L["When enabled, use Shift to enforce the selected buff in multi-choice categories like trackings, aspects, ..."] = true
 L["Wizard Oil"] = true
 L["Zoom when casting"] = true
+L["Shout"] = true
