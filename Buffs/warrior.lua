@@ -1,6 +1,4 @@
-if not LibStub then return end
 local SimpleSelfRebuff = LibStub("AceAddon-3.0"):GetAddon("SimpleSelfRebuff", true)
-if not SimpleSelfRebuff then return end
 if select(2, UnitClass('player')) ~= 'WARRIOR' then return end
 
 local stamina = GetSpellInfo(469)
@@ -16,7 +14,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	end
 
 	local buff = self:GetCategory(L['Shout'])
-		:add( 6673, 'subcat', 'attackpower'     ) -- Battle Shout
-		:add( 469, 'subcat', 'stamina'     ) -- Commanding Shout
+		:add( 6673, 'subcat', 'attackpower') -- Battle Shout
+		:add( 469, 'subcat', 'stamina') -- Commanding Shout
 	buff.checkRequirement = Shout			
 end)

@@ -88,17 +88,11 @@ local db
 -- Addon declaration
 -------------------------------------------------------------------------------
 
-SimpleSelfRebuff = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME,
-	"AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceBucket-3.0"
-	,"LibDebugLog-1.0"
-)
+SimpleSelfRebuff = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceBucket-3.0")
 local SimpleSelfRebuff = SimpleSelfRebuff
 
 
 -- Static early initialization
---@alpha@
-local debugOptions
---@end-alpha@
 do
 	local self = SimpleSelfRebuff
 
@@ -180,29 +174,6 @@ do
 		},
 	}
 
---@alpha@	
-	debugOptions ={
-		name = 'Debugging',
-		type = 'group',
-		order = 35,
-		args = {
-			diag = {
-				type = 'execute',
-				name = L['Diagnostic'],
-				desc = 'Dump some data to help bug fixing. Please includes this output into your bug reports.',
-				func = 'DumpDiagnostic',
-				order = 100,
-			},
-			debug = LibStub('LibDebugLog-1.0'):GetAce3OptionTable(SimpleSelfRebuff, 110),
-			debugHeader = {
-				name = 'Module debugging',
-				type = 'header',
-				order = 115,
-			},
-		},
-	}
---@end-alpha@
-
 	self.CATEGORY_TRACKING = CATEGORY_TRACKING
 	self.CATEGORY_MAINHAND = CATEGORY_MAINHAND
 	self.CATEGORY_OFFHAND  = CATEGORY_OFFHAND
@@ -222,12 +193,6 @@ do
 	self.STATE_DONTCAST  = STATE_DONTCAST
 
 	self.L = L
-
---@debug@
-	self.categories = categories
-	self.sources = sources
-	self.targets = targets
---@end-debug@
 end
 
 -------------------------------------------------------------------------------
@@ -372,20 +337,11 @@ function SimpleSelfRebuff:OnInitialize()
 	end
 
 
-	-- AceDebug-2.0 compat layer
-	self.SetDebugging = self.ToggleDebugLog
-	self.IsDebugging = self.IsDebugLogEnabled
-
 	-- Register options and chat commands
 	AceConfig:RegisterOptionsTable(self.name, self.options)
 	AceConfigDialog:SetDefaultSize(self.name, 450, 500)
 	self:RegisterChatCommand("ssr", "ChatCommand")
 	self:RegisterChatCommand("simpleselfrebuff", "ChatCommand")
-
---@alpha@
-	-- Debug config
-	AceConfig:RegisterOptionsTable(self.name..'_DEBUG', debugOptions)
---@end-alpha@
 
 	-- Blizzard panel
 	AceConfigDialog:AddToBlizOptions(self.name, self.name)
@@ -417,10 +373,6 @@ end
 function SimpleSelfRebuff:ChatCommand(input)
 	if not input or input:trim() == "" then
 		self:OpenGUI()
---@alpha@	
-	elseif input == "debug" then
-		AceConfigDialog:Open(self.name..'_DEBUG')
---@end-alpha@
 	else
 		LibStub("AceConfigCmd-3.0").HandleCommand(self, "ssr", self.name, input == "help" and "" or input)
 	end
@@ -587,7 +539,7 @@ end
 function SimpleSelfRebuff:SetMonitoringActive(value)
 	if value and not monitoringActive then
 		monitoringActive = true
-		self:Debug('Activated')
+		--self:Debug('Activated')
 
 		if not self.heartBeatTimer then
 			self.heartBeatTimer = self:ScheduleRepeatingTimer('SendHeartBeat', 1.5)
@@ -598,7 +550,7 @@ function SimpleSelfRebuff:SetMonitoringActive(value)
 
 	elseif not value and monitoringActive then
 		monitoringActive = nil
-		self:Debug('Disactivated')
+		--self:Debug('Disactivated')
 
 		if self.heartBeatTimer then
 			self:CancelTimer(self.heartBeatTimer, true)
@@ -699,14 +651,6 @@ do
 	end
 
 	function SimpleSelfRebuff:OnModuleCreated(module)
-		--@alpha@
-		if type(module.Debug) == 'function' then
-			local opts = debugOptions.args
-			local opt = LibStub('LibDebugLog-1.0'):GetAce3OptionTable(module, 120)
-			opt.name = module.moduleName
-			opts['debug_'..module.moduleName] = opt
-		end
-		--@end-alpha@
 		lodModules[module.moduleName] = nil
 	end
 
@@ -721,7 +665,7 @@ local modulePrototype = { core = SimpleSelfRebuff }
 SimpleSelfRebuff:EmbedSignals(modulePrototype)
 
 SimpleSelfRebuff.modulePrototype = modulePrototype
-SimpleSelfRebuff:SetDefaultModuleLibraries('AceEvent-3.0', 'LibDebugLog-1.0')
+SimpleSelfRebuff:SetDefaultModuleLibraries('AceEvent-3.0')
 SimpleSelfRebuff:SetDefaultModulePrototype(modulePrototype)
 SimpleSelfRebuff:SetDefaultModuleState(false)
 
@@ -1126,7 +1070,6 @@ end
 function CategoryClass.prototype:SetState(newState)
 	if newState ~= self.state then
 		self.state = newState
-		SimpleSelfRebuff:Debug('%s state changed to %s',  self.name, SimpleSelfRebuff:fmtState(newState))
 		SimpleSelfRebuff:SendSignal('StateChanged', self, self:GetState())
 		return true
 	end
@@ -1165,10 +1108,6 @@ do
 		self.buffs = {}
 		self:RegisterMonitoringEvents()
 		self:RegisterSignal('RegistryProcessed', 'OnRegistryProcessed', true)
-	end
-
-	function BuffAspectClass.prototype:Debug(...)
-		SimpleSelfRebuff:Debug(...)
 	end
 
 	function BuffAspectClass.prototype:_delegate(methodName, ...)
@@ -1362,7 +1301,7 @@ do
 	end
 
 	function SpellBuff:SetupSecureButton(buff, button)
-		self:Debug('Setup casting for spell %q', buff.name)
+		--self:Debug('Setup casting for spell %q', buff.name)
 		button:SetAttribute('*type*', 'spell')
 		button:SetAttribute('*spell*', buff.name)
 	end
@@ -1438,14 +1377,14 @@ do
 			if buff then
 				seen[buff] = true
 				if buff:SetAsActualBuff(true, isMine, timeLeft) then
-					self:Debug('Found aura %s (%q)', buff.name, timeLeft)
+					--self:Debug('Found aura %s (%q)', buff.name, timeLeft)
 				end
 			end
 		end
 
 		for buff in pairs(self.allBuffs) do
 			if not seen[buff] and buff:IsActualBuff() then
-				self:Debug('%s faded out', buff.name)
+				--self:Debug('%s faded out', buff.name)
 				buff:SetAsActualBuff(false)
 			end
 		end
@@ -1509,7 +1448,7 @@ do
 		for buff in pairs(self.allBuffs) do
 			local active = select(3, GetTrackingInfo(buff.trackingId))
 			if active then
-				SimpleSelfRebuff:Debug('Active tracking: %q', buff.name)
+				--SimpleSelfRebuff:Debug('Active tracking: %q', buff.name)
 				buff:SetAsActualBuff(true, true)
 				return
 			end
@@ -1525,7 +1464,7 @@ do
 	SimpleSelfRebuff.buffTypes.TrackingSource = TrackingBuffSource
 
 	function TrackingBuffSource:SetupSecureButton(buff, button)
-		self:Debug('Setup casting for tracking %q', buff.name)
+		--self:Debug('Setup casting for tracking %q', buff.name)
 		button:SetAttribute('*type*', 'macro')
 		button:SetAttribute('*macrotext*', ('/run SetTracking(%s)'):format(buff.trackingId or "nil"))
 	end
@@ -1611,7 +1550,7 @@ do
 	end
 
 	function WeaponBuffClass.prototype:SetupSecureButton(buff, button)
-		self:Debug('Setting up for buff %q on %q', buff.name, self.slot)
+		--self:Debug('Setting up for buff %q on %q', buff.name, self.slot)
 		button:SetAttribute('*target-slot*', self.slot)
 	end
 
@@ -1668,7 +1607,7 @@ do
 
 	function SimpleSelfRebuff:ProcessRegistry()
 		if not #setupFuncs then
-			self:Debug('no setup funcs')
+			--self:Debug('no setup funcs')
 			return
 		end
 
