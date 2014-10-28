@@ -81,7 +81,7 @@ function DataObject:OnEnable()
 			if module:IsEnabled() and type(module.FeedDataObject) == 'function' then
 				local modWeight, modText, modIcon = module:FeedDataObject()
 				if modWeight then
-					self:Debug('%s: weight=%s, text=%q icon=%q', module:GetName(), modWeight, modText, modIcon)
+					--self:Debug('%s: weight=%s, text=%q icon=%q', module:GetName(), modWeight, modText, modIcon)
 					if modText and modWeight > textWeight then
 						textWeight, text = modWeight, modText
 					end
@@ -91,7 +91,7 @@ function DataObject:OnEnable()
 				end
 			end
 		end
-		self:Debug('Finally: text=%q (%s), icon=%q (%s)', text, textWeight, icon, iconWeight)
+		--self:Debug('Finally: text=%q (%s), icon=%q (%s)', text, textWeight, icon, iconWeight)
 		object.text = text
 		object.icon = icon
 	end
