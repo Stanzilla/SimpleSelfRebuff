@@ -9,7 +9,7 @@ SimpleSelfRebuff:RegisterBuffSetup(function(self, L)
 	local buff = self:GetCategory("Lethal"):addMulti(
 		2823, -- Deadly Poison
 		8679,  -- Wound Poison
-		157584 -- Instant Poison
+		2823 -- Instant Poison
 	)
 	buff.checkRequirement = Lethal
 
