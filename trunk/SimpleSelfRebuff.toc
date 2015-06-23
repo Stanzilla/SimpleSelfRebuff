@@ -1,4 +1,4 @@
-﻿## Interface: 60100
+## Interface: 60200
 ## Title: SimpleSelfRebuff
 ## Notes: Rebuff yourself with the mousewheel.
 ## Author: Adirelle
