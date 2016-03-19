@@ -104,15 +104,15 @@ function DataObject:OnEnable()
 
 		for category, state, expected, actual, timeLeft in self.core:IterateCategories(STATE_SET) do
 			local name, timeLeft, r, g, b = GetBuffInfo(category, state, expected, actual, timeLeft)
-			if self.core:IsDebugging() then
-				timeLeft = ("state=%s, expected=%s, actual=%s, timeLeft=%s"):format(
-					tostring(self.core:fmtState(state)),
-					tostring(expected and expected.name),
-					tostring(actual and actual.name),
-					tostring(timeLeft)
-				)
-				name = name or "-"
-			end
+			-- if self.core:IsDebugging() then
+			-- 	timeLeft = ("state=%s, expected=%s, actual=%s, timeLeft=%s"):format(
+			-- 		tostring(self.core:fmtState(state)),
+			-- 		tostring(expected and expected.name),
+			-- 		tostring(actual and actual.name),
+			-- 		tostring(timeLeft)
+			-- 	)
+			-- 	name = name or "-"
+			-- end
 			if name then
 				tooltip:AddDoubleLine(name, timeLeft, r,g,b, r,g,b)
 			end
